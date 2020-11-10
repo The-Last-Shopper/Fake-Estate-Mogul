@@ -19,8 +19,9 @@ const Cart = require('./cart')
 Cart.hasOne(User)
 User.belongsTo(Cart)
 
-// Cart.hasMany(Product)
-// Product.belongsTo(Cart)
+// Previously defined association between Cart and Product
+// Cart.hasMany(Product);
+// Product.belongsTo(Cart);
 
 module.exports = {
   User,
