@@ -3,10 +3,22 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
+  name: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+    validate: {
+      isEmpty: false
+    }
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isEmpty: false,
+      isEmail: true
+    }
   },
   password: {
     type: Sequelize.STRING,
@@ -16,17 +28,40 @@ const User = db.define('user', {
       return () => this.getDataValue('password')
     }
   },
-  salt: {
-    type: Sequelize.STRING,
-    // Making `.salt` act like a function hides it when serializing to JSON.
-    // This is a hack to get around Sequelize's lack of a "private" option.
-    get() {
-      return () => this.getDataValue('salt')
+  billingInfo: {
+    type: Sequelize.INTEGER,
+    validate: {
+      isCreditCard: true
     }
   },
-  googleId: {
-    type: Sequelize.STRING
+  imageUrl: {
+    type: Sequelize.STRING,
+    validate: {
+      isUrl: true
+    }
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isEmpty: false
+    }
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
+  // salt: {
+  //   type: Sequelize.STRING,
+  //   // Making `.salt` act like a function hides it when serializing to JSON.
+  //   // This is a hack to get around Sequelize's lack of a "private" option.
+  //   get() {
+  //     return () => this.getDataValue('salt')
+  //   }
+  // },
+  // googleId: {
+  //   type: Sequelize.STRING
+  // } Commented out until OAuth
 })
 
 module.exports = User
