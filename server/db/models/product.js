@@ -6,7 +6,7 @@ const Product = db.define('products', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      isEmpty: false
+      notEmpty: true
     }
   },
   description: {
@@ -16,7 +16,7 @@ const Product = db.define('products', {
     type: Sequelize.DOUBLE,
     allowNull: false,
     validate: {
-      isEmpty: false,
+      notEmpty: true,
       isNumeric: true
     }
   },

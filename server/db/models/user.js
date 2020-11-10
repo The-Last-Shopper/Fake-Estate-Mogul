@@ -8,7 +8,7 @@ const User = db.define('user', {
     unique: true,
     allowNull: false,
     validate: {
-      isEmpty: false
+      notEmpty: true
     }
   },
   email: {
@@ -16,7 +16,7 @@ const User = db.define('user', {
     unique: true,
     allowNull: false,
     validate: {
-      isEmpty: false,
+      notEmpty: true,
       isEmail: true
     }
   },
@@ -29,7 +29,7 @@ const User = db.define('user', {
     }
   },
   billingInfo: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     validate: {
       isCreditCard: true
     }
@@ -44,21 +44,21 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      isEmpty: false
+      notEmpty: true
     }
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  salt: {
+    type: Sequelize.STRING,
+    // Making `.salt` act like a function hides it when serializing to JSON.
+    // This is a hack to get around Sequelize's lack of a "private" option.
+    get() {
+      return () => this.getDataValue('salt')
+    }
   }
-  // salt: {
-  //   type: Sequelize.STRING,
-  //   // Making `.salt` act like a function hides it when serializing to JSON.
-  //   // This is a hack to get around Sequelize's lack of a "private" option.
-  //   get() {
-  //     return () => this.getDataValue('salt')
-  //   }
-  // },
   // googleId: {
   //   type: Sequelize.STRING
   // } Commented out until OAuth
