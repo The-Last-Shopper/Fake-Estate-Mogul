@@ -239,22 +239,17 @@ var AuthForm = function AuthForm(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Email")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     name: "email",
     type: "email"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "username"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Username")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    name: "username",
-    type: "text"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+  })), name === 'signup' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "name"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Name")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     name: "name",
     type: "text"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "address"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Address")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     name: "address",
     type: "text"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "password"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Password")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     name: "password",
@@ -295,11 +290,17 @@ var mapDispatch = function mapDispatch(dispatch) {
     handleSubmit: function handleSubmit(evt, type) {
       evt.preventDefault();
       var formName = type;
-      var email = evt.target.email.value;
-      var password = evt.target.password.value;
-      var address = evt.target.address.value;
-      var name = evt.target.name.value;
-      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["auth"])(email, password, address, name, formName));
+      var formDataObj = {
+        email: evt.target.email.value,
+        password: evt.target.password.value
+      };
+
+      if (type === 'signup') {
+        formDataObj.name = evt.target.name.value;
+        formDataObj.address = evt.target.address.value;
+      }
+
+      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["auth"])(formDataObj, formName));
     }
   };
 };
@@ -1098,7 +1099,7 @@ var me = function me() {
     }()
   );
 };
-var auth = function auth(email, password, address, name, method) {
+var auth = function auth(userInfo, method) {
   return (
     /*#__PURE__*/
     function () {
@@ -1112,12 +1113,7 @@ var auth = function auth(email, password, address, name, method) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/auth/".concat(method), {
-                  email: email,
-                  password: password,
-                  address: address,
-                  name: name
-                });
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/auth/".concat(method), userInfo);
 
               case 3:
                 res = _context2.sent;
