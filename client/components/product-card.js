@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-export default props => {
+const ProductCard = props => {
   return (
     <div className="product-card">
       <img src={props.product.imageUrl} />
@@ -13,3 +13,5 @@ export default props => {
     </div>
   )
 }
+
+export default ProductCard
