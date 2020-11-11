@@ -18,28 +18,23 @@ const AuthForm = props => {
           </label>
           <input name="email" type="email" />
         </div>
-
-        <div>
-          <label htmlFor="username">
-            <small>Username</small>
-          </label>
-          <input name="username" type="text" />
-        </div>
-        <br />
-        <div>
-          <label htmlFor="name">
-            <small>Name</small>
-          </label>
-          <input name="name" type="text" />
-        </div>
-
-        <div>
-          <label htmlFor="address">
-            <small>Address</small>
-          </label>
-          <input name="address" type="text" />
-        </div>
-        <br />
+        {name === 'signup' && (
+          <React.Fragment>
+            <div>
+              <label htmlFor="name">
+                <small>Name</small>
+              </label>
+              <input name="name" type="text" />
+            </div>
+            <br />
+            <div>
+              <label htmlFor="address">
+                <small>Address</small>
+              </label>
+              <input name="address" type="text" />
+            </div>
+          </React.Fragment>
+        )}
         <div>
           <label htmlFor="password">
             <small>Password</small>
@@ -85,11 +80,15 @@ const mapDispatch = dispatch => {
     handleSubmit(evt, type) {
       evt.preventDefault()
       const formName = type
-      const email = evt.target.email.value
-      const password = evt.target.password.value
-      const address = evt.target.address.value
-      const name = evt.target.name.value
-      dispatch(auth(email, password, address, name, formName))
+      const formDataObj = {
+        email: evt.target.email.value,
+        password: evt.target.password.value
+      }
+      if (type === 'signup') {
+        formDataObj.name = evt.target.name.value
+        formDataObj.address = evt.target.address.value
+      }
+      dispatch(auth(formDataObj, formName))
     }
   }
 }
