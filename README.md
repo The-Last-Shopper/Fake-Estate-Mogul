@@ -1,6 +1,6 @@
 # Grace Shopper - Fake Estate Mogul
 
-Lucas Freitas
-Winson Chan
-Valentyna Vasylieva
-YAN NAING LIN
+Lucas Freitas \n
+Winson Chan \n
+Valentyna Vasylieva \n
+YAN NAING LIN \n
