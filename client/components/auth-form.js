@@ -11,19 +11,42 @@ const AuthForm = props => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={e => handleSubmit(e, name)} name={name}>
         <div>
           <label htmlFor="email">
             <small>Email</small>
           </label>
-          <input name="email" type="text" />
+          <input name="email" type="email" />
         </div>
+
+        <div>
+          <label htmlFor="username">
+            <small>Username</small>
+          </label>
+          <input name="username" type="text" />
+        </div>
+        <br />
+        <div>
+          <label htmlFor="name">
+            <small>Name</small>
+          </label>
+          <input name="name" type="text" />
+        </div>
+
+        <div>
+          <label htmlFor="address">
+            <small>Address</small>
+          </label>
+          <input name="address" type="text" />
+        </div>
+        <br />
         <div>
           <label htmlFor="password">
             <small>Password</small>
           </label>
           <input name="password" type="password" />
         </div>
+        <br />
         <div>
           <button type="submit">{displayName}</button>
         </div>
@@ -59,12 +82,14 @@ const mapSignup = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleSubmit(evt) {
+    handleSubmit(evt, type) {
       evt.preventDefault()
-      const formName = evt.target.name
+      const formName = type
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      const address = evt.target.address.value
+      const name = evt.target.name.value
+      dispatch(auth(email, password, address, name, formName))
     }
   }
 }
