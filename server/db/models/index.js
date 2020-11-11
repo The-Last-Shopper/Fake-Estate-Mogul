@@ -16,12 +16,11 @@ const Cart = require('./cart')
  * instead of: const User = require('../db/models/user')
  */
 
-Cart.hasOne(User)
-User.belongsTo(Cart)
+User.hasOne(Cart)
+Cart.belongsTo(User)
 
-// Previously defined association between Cart and Product
-// Cart.hasMany(Product);
-// Product.belongsTo(Cart);
+Cart.belongsToMany(Product, {through: 'Cart_Products'})
+Product.belongsToMany(Cart, {through: 'Cart_Products'})
 
 module.exports = {
   User,
