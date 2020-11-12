@@ -2,6 +2,7 @@ import React from 'react'
 import ProductCard from './product-card'
 import {connect} from 'react-redux'
 import {fetchAllProducts} from '../store/all-products'
+import {Link} from 'react-router-dom'
 
 class AllProducts extends React.Component {
   componentDidMount() {
@@ -10,6 +11,9 @@ class AllProducts extends React.Component {
   render() {
     return (
       <div className="all-products">
+        <Link to="/products/add">
+          <button type="button">Add Product</button>
+        </Link>
         <h2>All Products</h2>
         {this.props.products.length ? (
           this.props.products.map(product => {

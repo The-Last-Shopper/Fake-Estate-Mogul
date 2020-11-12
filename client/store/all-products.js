@@ -13,7 +13,7 @@ const getProducts = products => ({
 
 const addProduct = newProduct => ({
   type: ADD_NEW_PRODUCT,
-  product: newProduct
+  newProduct
 })
 
 //THUNK

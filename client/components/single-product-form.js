@@ -1,9 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {pushNewProduct} from '../store/all-products'
 import {putSingleProduct, fetchSingleProduct} from '../store/single-product'
 
-class EditProduct extends React.Component {
+class ProductForm extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -12,17 +13,14 @@ class EditProduct extends React.Component {
       price: 0,
       imageUrl: ''
     }
-    this.handleUpdate = this.handleUpdate.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
-    const product = this.props
-
-    this.props.getSingleProduct(
-      this.props.match.params.productId,
-      this.setState
-    )
+    if (this.props.name === 'update') {
+      this.props.getSingleProduct(this.props.match.params.productId)
+    }
   }
 
   handleChange(e) {
@@ -30,16 +28,20 @@ class EditProduct extends React.Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
-  handleUpdate(e) {
+  handleSubmit(e) {
     e.preventDefault()
-    this.props.updateProduct(this.props.product.id, this.state)
+    if (this.props.name === 'add') {
+      this.props.addProduct(this.state)
+    } else {
+      this.props.updateProduct(this.props.product.id, this.state)
+    }
   }
 
   render() {
     const product = this.props.product
     return (
       <div>
-        <form onSubmit={e => this.handleUpdate(e)}>
+        <form onSubmit={e => this.handleSubmit(e)}>
           <label htmlFor="name">Name</label>
           <input
             name="name"
@@ -70,29 +72,41 @@ class EditProduct extends React.Component {
             value={this.state.imageUrl}
             onChange={this.handleChange}
           />
-          <Link to={`/products/${product.id}`}>
-            <button type="button">Cancel</button>
-          </Link>
+          <button type="button" onClick={this.props.history.goBack}>
+            Back
+          </button>
+
           <button type="submit">Submit</button>
         </form>
       </div>
     )
   }
 }
-const mapStateToProps = state => {
+const mapUpdate = state => {
   return {
+    name: 'update',
     product: state.product
+  }
+}
+const mapAdd = state => {
+  return {
+    name: 'add'
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSingleProduct: async productId => {
+    getSingleProduct: productId => {
       dispatch(fetchSingleProduct(productId))
     },
     updateProduct: (productId, data) =>
-      dispatch(putSingleProduct(productId, data))
+      dispatch(putSingleProduct(productId, data)),
+    addProduct: product => {
+      dispatch(pushNewProduct(product))
+    }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProduct)
+export const AddProduct = connect(mapAdd, mapDispatchToProps)(ProductForm)
+
+export const EditProduct = connect(mapUpdate, mapDispatchToProps)(ProductForm)

@@ -8,7 +8,8 @@ import {
   UserHome,
   AllProducts,
   SingleProduct,
-  EditProduct
+  EditProduct,
+  AddProduct
 } from './components'
 import {me} from './store'
 
@@ -36,9 +37,10 @@ class Routes extends Component {
         )}
         {/* Displays our Login component as a fallback */}
         <Route exact path="/">
-          <Redirect to="/allproducts" />
+          <Redirect to="/products" />
         </Route>
-        <Route exact path="/allproducts" component={AllProducts} />
+        <Route exact path="/products" component={AllProducts} />
+        <Route exact path="/products/add" component={AddProduct} />
         <Route exact path="/products/:productId" component={SingleProduct} />
         <Route exact path="/products/:productId/edit" component={EditProduct} />
       </Switch>
