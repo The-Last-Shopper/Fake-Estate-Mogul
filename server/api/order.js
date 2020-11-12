@@ -22,8 +22,10 @@ const {Order, OrderProduct, Product} = require('../db/models')
 router.post('/', async (req, res, next) => {
   try {
     const order = await Order.findOrCreate({
-      userId: req.body.userId,
-      isCheckedOut: false
+      where: {
+        userId: req.body.userId,
+        isCheckedOut: false
+      }
     })
     res.json(order)
   } catch (error) {

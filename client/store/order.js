@@ -18,17 +18,20 @@ const addProductToOrder = product => ({
   product
 })
 
-const thunkAddProductToOrder = (userId, productId) => {
+export const thunkAddProductToOrder = (userId, productId) => {
   return async dispatch => {
     try {
       const order = await axios.post('/api/order', {userId: userId})
       const product = await axios.get(`/api/products/${productId}`)
-      await axios.post('/api/orderProducts/addingProduct', {
+      const orderProduct = {
         price: product.data.price,
         quantity: 1, ////---->>>> TAKE VALUE FROM UI
-        orderId: order.data.id,
-        productId: productId
-      })
+        orderId: order.data[0].id,
+        productId: productId,
+        image: product.data.imageUrl
+      }
+      await axios.post('/api/orderProducts/addingProduct', orderProduct)
+      dispatch(addProductToOrder(orderProduct))
     } catch (error) {
       console.log(error)
     }
