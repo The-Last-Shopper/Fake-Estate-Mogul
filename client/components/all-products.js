@@ -11,9 +11,11 @@ class AllProducts extends React.Component {
   render() {
     return (
       <div className="all-products">
-        <Link to="/products/add">
-          <button type="button">Add Product</button>
-        </Link>
+        {this.props.isAdmin && (
+          <Link to="/products/add">
+            <button type="button">Add Product</button>
+          </Link>
+        )}
         <h2>All Products</h2>
         {this.props.products.length ? (
           this.props.products.map(product => {
@@ -29,6 +31,7 @@ class AllProducts extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    isAdmin: state.user.isAdmin,
     products: state.products
   }
 }

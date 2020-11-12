@@ -26,20 +26,23 @@ class SingleProduct extends React.Component {
         <img src={product.imageUrl} />
         <p>Price: {product.price} </p>
         <p>Description: {product.description}</p>
-        <div className="admin-buttons">
-          <Link to={`/products/${product.id}/edit`}>
-            <button type="button">Edit</button>
-          </Link>
-          <button type="button" onClick={this.handleDelete}>
-            Delete
-          </button>
-        </div>
+        {this.props.isAdmin && (
+          <div className="admin-buttons">
+            <Link to={`/products/${product.id}/edit`}>
+              <button type="button">Edit</button>
+            </Link>
+            <button type="button" onClick={this.handleDelete}>
+              Delete
+            </button>
+          </div>
+        )}
       </div>
     )
   }
 }
 const mapStateToProps = state => {
   return {
+    isAdmin: state.user.isAdmin,
     product: state.product
   }
 }
