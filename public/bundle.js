@@ -471,7 +471,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _store_single_product__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/single-product */ "./client/store/single-product.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _store_single_product__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/single-product */ "./client/store/single-product.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -482,13 +483,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -500,9 +502,13 @@ function (_React$Component) {
   _inherits(SingleProduct, _React$Component);
 
   function SingleProduct() {
+    var _this;
+
     _classCallCheck(this, SingleProduct);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(SingleProduct).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SingleProduct).call(this));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(SingleProduct, [{
@@ -511,12 +517,27 @@ function (_React$Component) {
       this.props.getSingleProduct(this.props.match.params.productId);
     }
   }, {
+    key: "handleDelete",
+    value: function handleDelete() {
+      console.log('button was clicked');
+      this.props.deleteProduct(this.props.product.id, this.props.history);
+    }
+  }, {
     key: "render",
     value: function render() {
       var product = this.props.product;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Name: ", product.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: product.imageUrl
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Price: ", product.price, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description: ", product.description));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Price: ", product.price, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description: ", product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "admin-buttons"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        to: "/"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button"
+      }, "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: this.handleDelete
+      }, "Delete")));
     }
   }]);
 
@@ -532,7 +553,10 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     getSingleProduct: function getSingleProduct(productId) {
-      return dispatch(Object(_store_single_product__WEBPACK_IMPORTED_MODULE_2__["fetchSingleProduct"])(productId));
+      return dispatch(Object(_store_single_product__WEBPACK_IMPORTED_MODULE_3__["fetchSingleProduct"])(productId));
+    },
+    deleteProduct: function deleteProduct(productId, history) {
+      return dispatch(Object(_store_single_product__WEBPACK_IMPORTED_MODULE_3__["deleteProduct"])(productId, history));
     }
   };
 };
@@ -792,26 +816,43 @@ socket.on('connect', function () {
 /*!**************************************!*\
   !*** ./client/store/all-products.js ***!
   \**************************************/
-/*! exports provided: fetchAllProducts, default */
+/*! exports provided: fetchAllProducts, pushNewProduct, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllProducts", function() { return fetchAllProducts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pushNewProduct", function() { return pushNewProduct; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
  //ACTION TYPES
 
-var GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS'; //ACTION CREATORS
+var GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
+var ADD_NEW_PRODUCT = 'ADD_NEW_PRODUCT'; //ACTION CREATORS
 
 var getProducts = function getProducts(products) {
   return {
     type: GET_ALL_PRODUCTS,
     products: products
+  };
+};
+
+var addProduct = function addProduct(newProduct) {
+  return {
+    type: ADD_NEW_PRODUCT,
+    product: newProduct
   };
 }; //THUNK
 
@@ -856,6 +897,47 @@ var fetchAllProducts = function fetchAllProducts() {
       };
     }()
   );
+};
+var pushNewProduct = function pushNewProduct(productInfo) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref2 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(dispatch) {
+        var newProduct;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/products', productInfo);
+
+              case 3:
+                newProduct = _context2.sent;
+                dispatch(addProduct(newProduct));
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.error('sum in done happen trying to add product', error);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 7]]);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }()
+  );
 }; //REDUCER
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
@@ -865,6 +947,9 @@ var fetchAllProducts = function fetchAllProducts() {
   switch (action.type) {
     case GET_ALL_PRODUCTS:
       return action.products;
+
+    case ADD_NEW_PRODUCT:
+      return [].concat(_toConsumableArray(state), [action.newProduct]);
 
     default:
       return state;
@@ -922,12 +1007,14 @@ var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(reducer, m
 /*!****************************************!*\
   !*** ./client/store/single-product.js ***!
   \****************************************/
-/*! exports provided: fetchSingleProduct, default */
+/*! exports provided: fetchSingleProduct, PUTSingleProduct, deleteProduct, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSingleProduct", function() { return fetchSingleProduct; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PUTSingleProduct", function() { return PUTSingleProduct; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteProduct", function() { return deleteProduct; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -936,11 +1023,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
  //ACTION TYPES //
 
-var GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'; //ACTION CREATORS//
+var GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT';
+var UPDATE_SINGLE_PRODUCT = 'UPDATE_SINGLE_PRODUCT'; //ACTION CREATORS//
 
 var getSingleProduct = function getSingleProduct(product) {
   return {
     type: GET_SINGLE_PRODUCT,
+    product: product
+  };
+};
+
+var updateSingleProduct = function updateSingleProduct(product) {
+  return {
+    type: UPDATE_SINGLE_PRODUCT,
     product: product
   };
 }; //Thunk//
@@ -988,6 +1083,86 @@ var fetchSingleProduct = function fetchSingleProduct(productId) {
       };
     }()
   );
+};
+var PUTSingleProduct = function PUTSingleProduct(productId) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref3 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(dispatch) {
+        var updatedProduct;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/products/".concat(productId));
+
+              case 3:
+                updatedProduct = _context2.sent;
+                dispatch(updateSingleProduct(updatedProduct.data));
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.error('Something done happened trying to update', error);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 7]]);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }()
+  );
+};
+var deleteProduct = function deleteProduct(productId, history) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref4 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3(dispatch) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/api/products/".concat(productId));
+
+              case 3:
+                history.push('/');
+                _context3.next = 9;
+                break;
+
+              case 6:
+                _context3.prev = 6;
+                _context3.t0 = _context3["catch"](0);
+                console.error(_context3.t0);
+
+              case 9:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 6]]);
+      }));
+
+      return function (_x3) {
+        return _ref4.apply(this, arguments);
+      };
+    }()
+  );
 }; //REDUCER//
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
@@ -996,6 +1171,9 @@ var fetchSingleProduct = function fetchSingleProduct(productId) {
 
   switch (action.type) {
     case GET_SINGLE_PRODUCT:
+      return action.product;
+
+    case UPDATE_SINGLE_PRODUCT:
       return action.product;
 
     default:
@@ -44720,7 +44898,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
