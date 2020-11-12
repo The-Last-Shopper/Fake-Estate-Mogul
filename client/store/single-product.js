@@ -30,10 +30,10 @@ export const fetchSingleProduct = productId => {
   }
 }
 
-export const PUTSingleProduct = productId => {
+export const putSingleProduct = (productId, data) => {
   return async dispatch => {
     try {
-      const updatedProduct = await axios.put(`/api/products/${productId}`)
+      const updatedProduct = await axios.put(`/api/products/${productId}`, data)
       dispatch(updateSingleProduct(updatedProduct.data))
     } catch (err) {
       console.error('Something done happened trying to update', error)
