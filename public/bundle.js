@@ -1042,28 +1042,55 @@ var addProductToOrder = function addProductToOrder(product) {
   };
 };
 
-var thunkAddProductToOrder = function thunkAddProductToOrder(productId) {
+var thunkAddProductToOrder = function thunkAddProductToOrder(userId, productId) {
   return (
     /*#__PURE__*/
     function () {
       var _ref = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee(dispatch) {
+        var order, product;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                try {// axios get /singleProduct route
-                  // axios.post /currentOrder
-                  // const {data} = await axios.post
-                } catch (error) {}
+                _context.prev = 0;
+                _context.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/order', {
+                  userId: userId
+                });
 
-              case 1:
+              case 3:
+                order = _context.sent;
+                _context.next = 6;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products/".concat(productId));
+
+              case 6:
+                product = _context.sent;
+                _context.next = 9;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/orderProducts/addingProduct', {
+                  price: product.data.price,
+                  quantity: 1,
+                  ////---->>>> TAKE VALUE FROM UI
+                  orderId: order.data.id,
+                  productId: productId
+                });
+
+              case 9:
+                _context.next = 14;
+                break;
+
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0);
+
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 11]]);
       }));
 
       return function (_x) {

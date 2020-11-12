@@ -1,14 +1,29 @@
-const router = require('express').Router();
-const Order = require('../db/models');
+const router = require('express').Router()
+const {Order, OrderProduct, Product} = require('../db/models')
 
-// router.get('/')
-// this route will be for signed in users who already have a cart
-// in session store
+// router.get ('/singleOrderWithDetails/:userId/:productId', async (req, res, next) => {
+//   try {
 
-router.post('/order', async (req, res, next) => {
+//     const singleOrder = await Product.findAll({
+//       // where: {
+//       //   userId: req.params.userId,
+//       //   isCheckedOut:false,
+//       // //  productId: req.params.productId
+//       // },
+
+//     include: [ {model: OrderProduct}]
+//     });
+//     res.json(singleOrder);
+//   } catch (error){
+//       console.log (error)
+//   }
+// })
+
+router.post('/', async (req, res, next) => {
   try {
-    const order = await Order.create({
-      userId: req.body.userId
+    const order = await Order.findOrCreate({
+      userId: req.body.userId,
+      isCheckedOut: false
     })
     res.json(order)
   } catch (error) {
