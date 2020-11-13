@@ -19,4 +19,35 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
+// PUT request //
+router.put('/:productId', async (req, res, next) => {
+  try {
+    const updateProduct = await Product.findByPk(req.params.productId)
+    updateProduct.update(req.body)
+    res.json(updateProduct)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+// POST request //
+router.post('/', async (req, res, next) => {
+  try {
+    const newProduct = await Product.create(req.body)
+    res.json(newProduct)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+// DELETE Request //
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    await Product.destroy({where: {id: req.params.productId}})
+    res.sendStatus(204)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 module.exports = router
