@@ -2,7 +2,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, AllProducts, SingleProduct} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  AllProducts,
+  SingleProduct,
+  EditProduct,
+  AddProduct
+} from './components'
 import {me} from './store'
 
 /**
@@ -21,18 +29,19 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        {isLoggedIn && (
+        {/* {isLoggedIn && (
           <Switch>
-            {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
           </Switch>
-        )}
+        )} */}
         {/* Displays our Login component as a fallback */}
         <Route exact path="/">
-          <Redirect to="/allproducts" />
+          <Redirect to="/products" />
         </Route>
-        <Route exact path="/allproducts" component={AllProducts} />
+        <Route exact path="/products" component={AllProducts} />
+        <Route exact path="/products/add" component={AddProduct} />
         <Route exact path="/products/:productId" component={SingleProduct} />
+        <Route exact path="/products/:productId/edit" component={EditProduct} />
       </Switch>
     )
   }
@@ -42,10 +51,12 @@ class Routes extends Component {
  * CONTAINER
  */
 const mapState = state => {
+  console.log('isAdmin?: ', state.user.isAdmin)
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: state.user.isAdmin
   }
 }
 

@@ -42,6 +42,14 @@ async function seed() {
       password: '123',
       billingInfo: '5114348265658398',
       address: '321 Marcy Street'
+    }),
+    User.create({
+      name: 'Admin',
+      email: 'admin@email.com',
+      password: 'admin',
+      billingInfo: '5114348265658398',
+      address: '543 Chinatown Street',
+      isAdmin: true
     })
   ])
 
