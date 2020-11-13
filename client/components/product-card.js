@@ -9,7 +9,12 @@ const ProductCard = props => {
         <h4>{props.product.name}</h4>
       </Link>
       <p className="price">{props.product.price}</p>
-      <button type="button">Add To Cart</button>
+      <button
+        onClick={() => props.handleClick(null, props.product.id)}
+        type="button"
+      >
+        Add To Cart
+      </button>
     </div>
   )
 }

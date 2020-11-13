@@ -125,6 +125,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _product_card__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./product-card */ "./client/components/product-card.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _store_all_products__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/all-products */ "./client/store/all-products.js");
+/* harmony import */ var _store_order__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/order */ "./client/store/order.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -135,13 +136,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -154,9 +156,13 @@ function (_React$Component) {
   _inherits(AllProducts, _React$Component);
 
   function AllProducts() {
+    var _this;
+
     _classCallCheck(this, AllProducts);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(AllProducts).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AllProducts).call(this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(AllProducts, [{
@@ -165,14 +171,23 @@ function (_React$Component) {
       this.props.fetchProducts();
     }
   }, {
+    key: "handleClick",
+    value: function handleClick(userId, productId) {
+      console.log('This is clicked');
+      this.props.addProductToOrder(userId, productId);
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-products"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "All Products"), this.props.products.length ? this.props.products.map(function (product) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_product_card__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: product.id,
-          product: product
+          product: product,
+          handleClick: _this2.handleClick
         });
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Sorry! All Properties are sold out!"));
     }
@@ -191,6 +206,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchProducts: function fetchProducts() {
       return dispatch(Object(_store_all_products__WEBPACK_IMPORTED_MODULE_3__["fetchAllProducts"])());
+    },
+    addProductToOrder: function addProductToOrder(userId, productId) {
+      return dispatch(Object(_store_order__WEBPACK_IMPORTED_MODULE_4__["thunkAddProductToOrder"])(userId, productId));
     }
   };
 };
@@ -397,7 +415,9 @@ var Navbar = function Navbar(_ref) {
     to: "/login"
   }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/signup"
-  }, "Sign Up"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
+  }, "Sign Up"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+    to: "/cart"
+  }, "Your Cart"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
 };
 /**
  * CONTAINER
@@ -430,6 +450,27 @@ Navbar.propTypes = {
 
 /***/ }),
 
+/***/ "./client/components/order-card.js":
+/*!*****************************************!*\
+  !*** ./client/components/order-card.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var OrderCard = function OrderCard(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "!!!!Order Card");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (OrderCard);
+
+/***/ }),
+
 /***/ "./client/components/order.js":
 /*!************************************!*\
   !*** ./client/components/order.js ***!
@@ -442,6 +483,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _order_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./order-card */ "./client/components/order-card.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -463,6 +505,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Order =
 /*#__PURE__*/
 function (_React$Component) {
@@ -477,9 +520,12 @@ function (_React$Component) {
   _createClass(Order, [{
     key: "render",
     value: function render() {
+      var order = this.props.order;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "order"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your Orders"));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your Orders"), !order.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Your Cart is empty!") : order.map(function (product) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_order_card__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+      }));
     }
   }]);
 
@@ -487,7 +533,9 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-  return {};
+  return {
+    order: state.order
+  };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -523,6 +571,9 @@ var ProductCard = function ProductCard(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, props.product.name)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "price"
   }, props.product.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: function onClick() {
+      return props.handleClick(null, props.product.id);
+    },
     type: "button"
   }, "Add To Cart"));
 };
@@ -544,6 +595,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _store_single_product__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/single-product */ "./client/store/single-product.js");
+/* harmony import */ var _store_order__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/order */ "./client/store/order.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -554,13 +606,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -572,9 +625,13 @@ function (_React$Component) {
   _inherits(SingleProduct, _React$Component);
 
   function SingleProduct() {
+    var _this;
+
     _classCallCheck(this, SingleProduct);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(SingleProduct).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SingleProduct).call(this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(SingleProduct, [{
@@ -583,12 +640,24 @@ function (_React$Component) {
       this.props.getSingleProduct(this.props.match.params.productId);
     }
   }, {
+    key: "handleClick",
+    value: function handleClick(userId, productId) {
+      this.props.addProductToOrder(userId, productId);
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var product = this.props.product;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Name: ", product.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: product.imageUrl
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Price: ", product.price, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description: ", product.description));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Price: ", product.price, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description: ", product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this2.handleClick(null, product.id);
+        },
+        type: "button"
+      }, "Add To Cart"));
     }
   }]);
 
@@ -605,6 +674,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     getSingleProduct: function getSingleProduct(productId) {
       return dispatch(Object(_store_single_product__WEBPACK_IMPORTED_MODULE_2__["fetchSingleProduct"])(productId));
+    },
+    addProductToOrder: function addProductToOrder(userId, productId) {
+      return dispatch(Object(_store_order__WEBPACK_IMPORTED_MODULE_3__["thunkAddProductToOrder"])(userId, productId));
     }
   };
 };
@@ -801,7 +873,7 @@ function (_Component) {
         component: _components__WEBPACK_IMPORTED_MODULE_4__["SingleProduct"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         exact: true,
-        path: "/order",
+        path: "/cart",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Order"]
       }));
     }
@@ -1001,11 +1073,12 @@ var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(reducer, m
 /*!*******************************!*\
   !*** ./client/store/order.js ***!
   \*******************************/
-/*! exports provided: default */
+/*! exports provided: thunkAddProductToOrder, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "thunkAddProductToOrder", function() { return thunkAddProductToOrder; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -1042,28 +1115,58 @@ var addProductToOrder = function addProductToOrder(product) {
   };
 };
 
-var thunkAddProductToOrder = function thunkAddProductToOrder(productId) {
+var thunkAddProductToOrder = function thunkAddProductToOrder(userId, productId) {
   return (
     /*#__PURE__*/
     function () {
       var _ref = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee(dispatch) {
+        var order, product, orderProduct;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                try {// axios get /singleProduct route
-                  // axios.post /currentOrder
-                  // const {data} = await axios.post
-                } catch (error) {}
+                _context.prev = 0;
+                _context.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/order', {
+                  userId: userId
+                });
 
-              case 1:
+              case 3:
+                order = _context.sent;
+                _context.next = 6;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products/".concat(productId));
+
+              case 6:
+                product = _context.sent;
+                orderProduct = {
+                  price: product.data.price,
+                  quantity: 1,
+                  ////---->>>> TAKE VALUE FROM UI
+                  orderId: order.data[0].id,
+                  productId: productId,
+                  image: product.data.imageUrl
+                };
+                _context.next = 10;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/orderProducts/addingProduct', orderProduct);
+
+              case 10:
+                dispatch(addProductToOrder(orderProduct));
+                _context.next = 16;
+                break;
+
+              case 13:
+                _context.prev = 13;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0);
+
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 13]]);
       }));
 
       return function (_x) {
@@ -1072,7 +1175,6 @@ var thunkAddProductToOrder = function thunkAddProductToOrder(productId) {
     }()
   );
 };
-
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -44893,7 +44995,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
