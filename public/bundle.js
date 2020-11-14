@@ -589,7 +589,7 @@ var ProductCard = function ProductCard(props) {
     className: "price"
   }, props.product.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: function onClick() {
-      return props.handleClick(null, props.product.id);
+      return props.handleClick(props.user.id, props.product.id);
     },
     type: "button"
   }, "Add To Cart"));
@@ -1286,7 +1286,7 @@ var pushNewProduct = function pushNewProduct(productInfo) {
               case 7:
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
-                console.error('sum in done happen trying to add product', error);
+                console.error('sum in done happen trying to add product', _context2.t0);
 
               case 10:
               case "end":
@@ -1373,11 +1373,12 @@ var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(reducer, m
 /*!*******************************!*\
   !*** ./client/store/order.js ***!
   \*******************************/
-/*! exports provided: thunkAddProductToOrder, default */
+/*! exports provided: thunkAddNewOrder, thunkAddProductToOrder, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "thunkAddNewOrder", function() { return thunkAddNewOrder; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "thunkAddProductToOrder", function() { return thunkAddProductToOrder; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -1395,14 +1396,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var initialState = [];
-var GET_ORDERS = 'GET_ORDERS'; // Come back to this when on sessions to do
-
+var ADD_NEW_ORDER = 'ADD_NEW_ORDERS';
 var ADD_PRODUCT_TO_ORDER = 'ADD_PRODUCT_TO_ORDER';
 
-var getOrders = function getOrders(orders) {
+var addNewOrder = function addNewOrder() {
   return {
-    type: GET_ORDERS,
-    orders: orders
+    type: ADD_NEW_ORDER
   };
 }; // GetOrdersThunk - Fetch existing cart from user session store
 // takes in a userId, uses its cookie to grab cart
@@ -1415,14 +1414,13 @@ var addProductToOrder = function addProductToOrder(product) {
   };
 };
 
-var thunkAddProductToOrder = function thunkAddProductToOrder(userId, productId) {
+var thunkAddNewOrder = function thunkAddNewOrder(userId) {
   return (
     /*#__PURE__*/
     function () {
       var _ref = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee(dispatch) {
-        var order, product, orderProduct;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -1434,12 +1432,47 @@ var thunkAddProductToOrder = function thunkAddProductToOrder(userId, productId) 
                 });
 
               case 3:
-                order = _context.sent;
-                _context.next = 6;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products/".concat(productId));
+                dispatch(addNewOrder());
+                _context.next = 9;
+                break;
 
               case 6:
-                product = _context.sent;
+                _context.prev = 6;
+                _context.t0 = _context["catch"](0);
+                console.error('unable to post new Order');
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 6]]);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }()
+  );
+};
+var thunkAddProductToOrder = function thunkAddProductToOrder(userId, productId) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref2 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(dispatch) {
+        var product, orderProduct;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products/".concat(productId));
+
+              case 3:
+                product = _context2.sent;
                 orderProduct = {
                   price: product.data.price,
                   quantity: 1,
@@ -1448,29 +1481,29 @@ var thunkAddProductToOrder = function thunkAddProductToOrder(userId, productId) 
                   productId: productId,
                   image: product.data.imageUrl
                 };
-                _context.next = 10;
+                _context2.next = 7;
                 return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/orderProducts/addingProduct', orderProduct);
 
-              case 10:
+              case 7:
                 dispatch(addProductToOrder(orderProduct));
-                _context.next = 16;
+                _context2.next = 13;
                 break;
 
-              case 13:
-                _context.prev = 13;
-                _context.t0 = _context["catch"](0);
-                console.log(_context.t0);
+              case 10:
+                _context2.prev = 10;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0);
 
-              case 16:
+              case 13:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, null, [[0, 13]]);
+        }, _callee2, null, [[0, 10]]);
       }));
 
-      return function (_x) {
-        return _ref.apply(this, arguments);
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
       };
     }()
   );
@@ -1480,8 +1513,8 @@ var thunkAddProductToOrder = function thunkAddProductToOrder(userId, productId) 
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case GET_ORDERS:
-      return action.orders;
+    case ADD_NEW_ORDER:
+      return state;
 
     case ADD_PRODUCT_TO_ORDER:
       return [].concat(_toConsumableArray(state), [action.product]);

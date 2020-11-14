@@ -10,7 +10,7 @@ const ProductCard = props => {
       </Link>
       <p className="price">{props.product.price}</p>
       <button
-        onClick={() => props.handleClick(null, props.product.id)}
+        onClick={() => props.handleClick(props.user.id, props.product.id)}
         type="button"
       >
         Add To Cart

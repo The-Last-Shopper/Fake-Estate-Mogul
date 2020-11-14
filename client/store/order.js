@@ -2,14 +2,12 @@ import axios from 'axios'
 
 const initialState = []
 
-const GET_ORDERS = 'GET_ORDERS' // Come back to this when on sessions to do
+const ADD_NEW_ORDER = 'ADD_NEW_ORDERS'
 const ADD_PRODUCT_TO_ORDER = 'ADD_PRODUCT_TO_ORDER'
 
-const getOrders = orders => ({
-  type: GET_ORDERS,
-  orders
+const addNewOrder = () => ({
+  type: ADD_NEW_ORDER
 })
-
 // GetOrdersThunk - Fetch existing cart from user session store
 // takes in a userId, uses its cookie to grab cart
 
@@ -18,10 +16,20 @@ const addProductToOrder = product => ({
   product
 })
 
+export const thunkAddNewOrder = userId => {
+  return async dispatch => {
+    try {
+      await axios.post('/api/order', {userId: userId})
+      dispatch(addNewOrder())
+    } catch (error) {
+      console.error('unable to post new Order')
+    }
+  }
+}
+
 export const thunkAddProductToOrder = (userId, productId) => {
   return async dispatch => {
     try {
-      const order = await axios.post('/api/order', {userId: userId})
       const product = await axios.get(`/api/products/${productId}`)
       const orderProduct = {
         price: product.data.price,
@@ -40,8 +48,8 @@ export const thunkAddProductToOrder = (userId, productId) => {
 
 export default (state = [], action) => {
   switch (action.type) {
-    case GET_ORDERS:
-      return action.orders
+    case ADD_NEW_ORDER:
+      return state
     case ADD_PRODUCT_TO_ORDER:
       return [...state, action.product]
     default:

@@ -1,5 +1,25 @@
 const router = require('express').Router()
-const {OrderProduct} = require('../db/models')
+const {OrderProduct, Order} = require('../db/models')
+
+router.get('/:userId', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    console.log(order)
+    const cart = await OrderProduct.findAll({
+      where: {
+        orderId: order.id
+      }
+    })
+    console.log(cart)
+    res.json(cart)
+  } catch (error) {
+    console.error(error)
+  }
+})
 
 router.post('/addingProduct', async (req, res, next) => {
   try {
