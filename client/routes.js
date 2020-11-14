@@ -30,11 +30,24 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        {/* {isLoggedIn && (
+        {isLoggedIn && (
           <Switch>
-            <Route path="/home" component={UserHome} />
+            <Route exact path="/" component={UserHome} />
+            <Route exact path="/products" component={AllProducts} />
+            <Route exact path="/products/add" component={AddProduct} />
+            <Route
+              exact
+              path="/products/:productId"
+              component={SingleProduct}
+            />
+            <Route exact path="/cart" component={Order} />
+            <Route
+              exact
+              path="/products/:productId/edit"
+              component={EditProduct}
+            />
           </Switch>
-        )} */}
+        )}
         {/* Displays our Login component as a fallback */}
         <Route exact path="/">
           <Redirect to="/products" />
@@ -53,7 +66,6 @@ class Routes extends Component {
  * CONTAINER
  */
 const mapState = state => {
-  console.log('isAdmin?: ', state.user.isAdmin)
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
