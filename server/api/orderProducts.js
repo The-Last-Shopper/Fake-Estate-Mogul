@@ -38,4 +38,19 @@ router.delete('/:orderId/:productId', async (req, res, next) => {
   }
 })
 
+router.put('/:orderId/:productId', async (req, res, next) => {
+  try {
+    const updateOrder = await OrderProduct.findOne({
+      where: {
+        orderId: req.params.orderId,
+        productId: req.params.productId
+      }
+    })
+    await updateOrder.update(req.body)
+    res.json(updateOrder)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 module.exports = router

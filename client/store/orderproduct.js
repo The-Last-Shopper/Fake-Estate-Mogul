@@ -56,7 +56,9 @@ export const thunkRemoveProductFromCart = (orderId, productId) => {
   return async dispatch => {
     try {
       await axios.delete(`/api/orderProducts/${orderId}/${productId}`)
-      dispatch(removeProductFromCart(productId))
+      const {data: cart} = await axios.get(`/api/orderProducts/${orderId}`)
+      dispatch(getCart(cart))
+      // dispatch(removeProductFromCart(productId))
     } catch (error) {
       console.log(error)
     }
@@ -70,8 +72,7 @@ export default (state = [], action) => {
     case ADD_PRODUCT_TO_CART:
       return [...state, action.product]
     case REMOVE_PRODUCT_FROM_CART:
-      const newState = state.filter(product => product.id !== action.productId)
-      return newState
+      return action.cart
     default:
       return state
   }
