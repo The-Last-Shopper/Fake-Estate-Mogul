@@ -13,6 +13,7 @@ import {
   AddProduct
 } from './components'
 import {me} from './store'
+import {thunkAddNewOrder} from './store/order'
 
 /**
  * COMPONENT
@@ -50,7 +51,7 @@ class Routes extends Component {
         )}
         {/* Displays our Login component as a fallback */}
         <Route exact path="/">
-          <Redirect to="/products" />
+          <Redirect to="/login" />
         </Route>
         <Route exact path="/products" component={AllProducts} />
         <Route exact path="/products/add" component={AddProduct} />
@@ -70,7 +71,8 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    isAdmin: state.user.isAdmin
+    isAdmin: state.user.isAdmin,
+    user: state.user
   }
 }
 

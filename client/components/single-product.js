@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {thunkAddProductToOrder} from '../store/order'
+import {thunkAddProductToCart} from '../store/orderproduct'
 import {Link} from 'react-router-dom'
 import {deleteProduct, fetchSingleProduct} from '../store/single-product'
 
@@ -15,8 +15,8 @@ class SingleProduct extends React.Component {
     this.props.getSingleProduct(this.props.match.params.productId)
   }
 
-  handleClick(userId, productId) {
-    this.props.addProductToOrder(userId, productId)
+  handleClick(order, product) {
+    this.props.addProductToCart(order, product)
   }
   handleDelete() {
     console.log('button was clicked')
@@ -32,7 +32,7 @@ class SingleProduct extends React.Component {
         <p>Price: {product.price} </p>
         <p>Description: {product.description}</p>
         <button
-          onClick={() => this.handleClick(null, product.id)}
+          onClick={() => this.handleClick(this.props.order, product)}
           type="button"
         >
           Add To Cart
@@ -54,15 +54,16 @@ class SingleProduct extends React.Component {
 const mapStateToProps = state => {
   return {
     isAdmin: state.user.isAdmin,
-    product: state.product
+    product: state.product,
+    order: state.order
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: productId => dispatch(fetchSingleProduct(productId)),
-    addProductToOrder: (userId, productId) =>
-      dispatch(thunkAddProductToOrder(userId, productId)),
+    addProductToCart: (order, product) =>
+      dispatch(thunkAddProductToCart(order, product)),
     deleteProduct: (productId, history) =>
       dispatch(deleteProduct(productId, history))
   }
