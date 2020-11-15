@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {thunkRemoveProductFromCart} from '../store/orderproduct'
 
 class OrderCard extends React.Component {
   constructor(props) {
@@ -8,16 +7,8 @@ class OrderCard extends React.Component {
     this.state = {
       quantity: ''
     }
-    this.removeProduct = this.removeProduct.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  removeProduct() {
-    const product = this.props.product
-    this.props
-      .removeProductFromCart(product.orderId, product.productId)
-      .then(() => this)
   }
 
   handleChange(e) {
@@ -37,7 +28,7 @@ class OrderCard extends React.Component {
         <img src={product.imageUrl} />
         <p>{product.description}</p>
         <p>Price: ${product.price} </p>
-        <button type="button" onClick={this.removeProduct}>
+        <button type="button" onClick={() => this.props.removeProduct(product)}>
           Remove from cart
         </button>
         <form onSubmit={this.handleSubmit}>
@@ -61,9 +52,6 @@ const mapStateToProps = state => ({
   order: state.order
 })
 
-const mapDispatchToProps = dispatch => ({
-  removeProductFromCart: (orderId, productId) =>
-    dispatch(thunkRemoveProductFromCart(orderId, productId))
-})
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderCard)
