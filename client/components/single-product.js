@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {thunkAddProductToCart} from '../store/orderproduct'
+import {fetchCart, thunkAddProductToCart} from '../store/orderproduct'
 import {Link} from 'react-router-dom'
 import {deleteProduct, fetchSingleProduct} from '../store/single-product'
 
@@ -13,14 +13,23 @@ class SingleProduct extends React.Component {
 
   componentDidMount() {
     this.props.getSingleProduct(this.props.match.params.productId)
+    this.props.getCart(this.props.order.id)
   }
 
   handleClick(order, product) {
-    this.props.addProductToCart(order, product)
+    this.props
+      .addProductToCart(order, product)
+      .then(() => this.persistentData())
   }
+
   handleDelete() {
     console.log('button was clicked')
     this.props.deleteProduct(this.props.product.id, this.props.history)
+  }
+
+  persistentData() {
+    const cart = this.props.cart
+    sessionStorage.setItem('cart', JSON.stringify(cart))
   }
 
   render() {
@@ -55,7 +64,8 @@ const mapStateToProps = state => {
   return {
     isAdmin: state.user.isAdmin,
     product: state.product,
-    order: state.order
+    order: state.order,
+    cart: state.cart
   }
 }
 
@@ -65,7 +75,8 @@ const mapDispatchToProps = dispatch => {
     addProductToCart: (order, product) =>
       dispatch(thunkAddProductToCart(order, product)),
     deleteProduct: (productId, history) =>
-      dispatch(deleteProduct(productId, history))
+      dispatch(deleteProduct(productId, history)),
+    getCart: orderId => dispatch(fetchCart(orderId))
   }
 }
 

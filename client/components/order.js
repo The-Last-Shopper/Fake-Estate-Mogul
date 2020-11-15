@@ -10,21 +10,21 @@ class Order extends React.Component {
 
   persistentData() {
     const cart = this.props.cart
-    console.log(cart)
     sessionStorage.setItem('cart', JSON.stringify(cart))
   }
 
   render() {
     const order = this.props.order
-    let cart = Object.keys(sessionStorage)
-    // let cart = sessionStorage.getItem('cart')
+    let cart = JSON.parse(sessionStorage.getItem('cart')) || []
     return (
       <div className="order">
         <h1>Your Orders</h1>
         {!cart.length ? (
           <h3>Your Cart is empty!</h3>
         ) : (
-          cart.map((product, index) => <OrderCard key={index} />)
+          cart.map((product, index) => (
+            <OrderCard product={product} key={index} />
+          ))
         )}
       </div>
     )

@@ -3,31 +3,36 @@ const {OrderProduct, Order} = require('../db/models')
 
 router.get('/:orderId', async (req, res, next) => {
   try {
-    const cart = await OrderProduct.findAll({
+    const orderId = req.params.orderId
+    let cart = await OrderProduct.findAll({
       where: {
-        orderId: req.params.orderId
+        orderId: orderId
       }
-      // include: [
-      //   {
-      //     model: OrderProduct,
-      //   },
-      // ],
     })
-    // const cart = await OrderProduct.findAll({
-    //   where: {
-    //     orderId: order.id
-    //   }
-    // })
     res.json(cart)
   } catch (error) {
-    console.error(error)
+    console.log(error)
   }
 })
 
-router.post('/addingProduct', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const orderProduct = await OrderProduct.create(req.body)
     res.json(orderProduct)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+router.delete('/:orderId/:productId', async (req, res, next) => {
+  try {
+    await OrderProduct.destroy({
+      where: {
+        orderId: req.params.orderId,
+        productId: req.params.productId
+      }
+    })
+    res.sendStatus(204)
   } catch (error) {
     console.log(error)
   }

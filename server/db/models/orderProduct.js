@@ -7,6 +7,12 @@ const OrderProduct = db.define('OrderProduct', {
   },
   quantity: {
     type: Sequelize.INTEGER
+  },
+  imageUrl: {
+    type: Sequelize.TEXT
+  },
+  description: {
+    type: Sequelize.TEXT
   }
 })
 
