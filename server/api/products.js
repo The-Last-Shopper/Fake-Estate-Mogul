@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const {isAdmin} = require('../auth-middleware')
 const {Product} = require('../db/models')
 
 router.get('/', async (req, res, next) => {
@@ -20,7 +21,7 @@ router.get('/:productId', async (req, res, next) => {
 })
 
 // PUT request //
-router.put('/:productId', async (req, res, next) => {
+router.put('/:productId', isAdmin, async (req, res, next) => {
   try {
     const updateProduct = await Product.findByPk(req.params.productId)
     updateProduct.update(req.body)
@@ -31,7 +32,7 @@ router.put('/:productId', async (req, res, next) => {
 })
 
 // POST request //
-router.post('/', async (req, res, next) => {
+router.post('/', isAdmin, async (req, res, next) => {
   try {
     const newProduct = await Product.create(req.body)
     res.json(newProduct)
@@ -41,7 +42,7 @@ router.post('/', async (req, res, next) => {
 })
 
 // DELETE Request //
-router.delete('/:productId', async (req, res, next) => {
+router.delete('/:productId', isAdmin, async (req, res, next) => {
   try {
     await Product.destroy({where: {id: req.params.productId}})
     res.sendStatus(204)
