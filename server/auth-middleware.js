@@ -1,6 +1,6 @@
 function isAdmin(req, res, next) {
   console.log('req.user: ', req.user)
-  if (req.user.isAdmin === false) {
+  if (!req.user || !req.user.isAdmin) {
     const err = new Error('Non-Admin attempting to access Admin route')
     err.status = '401'
     next(err)

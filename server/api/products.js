@@ -32,7 +32,7 @@ router.put('/:productId', isAdmin, async (req, res, next) => {
 })
 
 // POST request //
-router.post('/', async (req, res, next) => {
+router.post('/', isAdmin, async (req, res, next) => {
   try {
     const newProduct = await Product.create(req.body)
     res.json(newProduct)
@@ -42,7 +42,7 @@ router.post('/', async (req, res, next) => {
 })
 
 // DELETE Request //
-router.delete('/:productId', async (req, res, next) => {
+router.delete('/:productId', isAdmin, async (req, res, next) => {
   try {
     await Product.destroy({where: {id: req.params.productId}})
     res.sendStatus(204)
