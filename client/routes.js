@@ -10,7 +10,8 @@ import {
   SingleProduct,
   Order,
   EditProduct,
-  AddProduct
+  AddProduct,
+  UsersInfo
 } from './components'
 import {me} from './store'
 import {thunkAddNewOrder} from './store/order'
@@ -35,6 +36,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             <Route exact path="/" component={UserHome} />
+            <Route exact path="/users" component={UsersInfo} />
             <Route exact path="/products" component={AllProducts} />
             <Route exact path="/products/add" component={AddProduct} />
             <Route
@@ -56,7 +58,7 @@ class Routes extends Component {
           <Redirect to="/login" />
         </Route>
         <Route exact path="/products" component={AllProducts} />
-        <Route exact path="/products/add" component={AddProduct} />
+        {/* <Route exact path="/products/add" component={AddProduct} /> */}
         <Route exact path="/products/:productId" component={SingleProduct} />
         <Route exact path="/cart" component={Order} />
         <Route exact path="/products/:productId/edit" component={EditProduct} />

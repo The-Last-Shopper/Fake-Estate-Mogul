@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const {isAuthorized} = require('../auth-middleware')
 const {Order, OrderProduct, Product} = require('../db/models')
 
 router.post('/', async (req, res, next) => {
@@ -16,6 +17,7 @@ router.post('/', async (req, res, next) => {
 })
 
 router.put('/:orderId', async (req, res, next) => {
+  //might have to send userId through body or find order by UserId association
   try {
     const updateCheckOut = await Order.findByPk(req.params.orderId)
     await updateCheckOut.update({isCheckedOut: true})
