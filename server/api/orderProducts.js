@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {OrderProduct, Order} = require('../db/models')
+const {isAuthorized} = require('../auth-middleware')
 
 router.get('/:orderId', async (req, res, next) => {
   try {

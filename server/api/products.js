@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const {isAdmin} = require('../auth-middleware')
 const {Product} = require('../db/models')
 
 router.get('/', async (req, res, next) => {
@@ -20,7 +21,7 @@ router.get('/:productId', async (req, res, next) => {
 })
 
 // PUT request //
-router.put('/:productId', async (req, res, next) => {
+router.put('/:productId', isAdmin, async (req, res, next) => {
   try {
     const updateProduct = await Product.findByPk(req.params.productId)
     updateProduct.update(req.body)
