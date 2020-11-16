@@ -14,6 +14,7 @@ import {
 } from './components'
 import {me} from './store'
 import {thunkAddNewOrder} from './store/order'
+import CheckOut from './components/checkout'
 
 /**
  * COMPONENT
@@ -47,6 +48,7 @@ class Routes extends Component {
               path="/products/:productId/edit"
               component={EditProduct}
             />
+            <Route exact path="/checkout" component={CheckOut} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
@@ -58,6 +60,7 @@ class Routes extends Component {
         <Route exact path="/products/:productId" component={SingleProduct} />
         <Route exact path="/cart" component={Order} />
         <Route exact path="/products/:productId/edit" component={EditProduct} />
+        <Route exact path="/checkout" component={CheckOut} />
       </Switch>
     )
   }

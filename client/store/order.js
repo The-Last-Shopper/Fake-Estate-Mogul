@@ -14,8 +14,6 @@ const checkOutOrder = order => ({
   type: CHECKOUT_ORDER,
   order
 })
-// GetOrdersThunk - Fetch existing cart from user session store
-// takes in a userId, uses its cookie to grab cart
 
 export const thunkAddNewOrder = user => {
   return async dispatch => {
@@ -35,7 +33,7 @@ export const thunkAddNewOrder = user => {
 export const thunkCheckOut = orderId => {
   return async dispatch => {
     try {
-      const checkedOutOrder = await axios.put(`/api/order/${orderId}`)
+      const {data: checkedOutOrder} = await axios.put(`/api/order/${orderId}`)
       dispatch(checkOutOrder(checkedOutOrder))
     } catch (error) {
       console.error(error)
