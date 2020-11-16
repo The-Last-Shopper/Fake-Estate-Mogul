@@ -14,8 +14,6 @@ const checkOutOrder = order => ({
   type: CHECKOUT_ORDER,
   order
 })
-// GetOrdersThunk - Fetch existing cart from user session store
-// takes in a userId, uses its cookie to grab cart
 
 export const thunkAddNewOrder = user => {
   return async dispatch => {

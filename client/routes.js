@@ -48,6 +48,7 @@ class Routes extends Component {
               path="/products/:productId/edit"
               component={EditProduct}
             />
+            <Route exact path="/checkout" component={CheckOut} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

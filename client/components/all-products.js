@@ -26,7 +26,7 @@ class AllProducts extends React.Component {
 
   persistentData() {
     const cart = this.props.cart
-    sessionStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem('cart', JSON.stringify(cart))
   }
 
   render() {

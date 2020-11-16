@@ -29,7 +29,7 @@ class Order extends React.Component {
 
   persistentData() {
     const cart = this.props.cart
-    sessionStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem('cart', JSON.stringify(cart))
     this.props.getCart(this.props.order.id)
   }
 
@@ -49,6 +49,7 @@ class Order extends React.Component {
     this.props
       .checkOutOrder(this.props.order.id)
       .then(() => this.props.getOrder(this.props.user))
+    // .then(() => this.props.getCart(this.props.order.id))
   }
 
   findTotal() {
@@ -60,7 +61,7 @@ class Order extends React.Component {
 
   render() {
     const order = this.props.order
-    let cart = JSON.parse(sessionStorage.getItem('cart')) || []
+    let cart = JSON.parse(localStorage.getItem('cart')) || []
     return (
       <div className="order">
         <h1>Your Orders</h1>

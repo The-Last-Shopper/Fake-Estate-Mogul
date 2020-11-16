@@ -192,7 +192,7 @@ function (_React$Component) {
     key: "persistentData",
     value: function persistentData() {
       var cart = this.props.cart;
-      sessionStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
     }
   }, {
     key: "render",
@@ -385,13 +385,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var CheckOut = function CheckOut(props) {
-  console.log(props);
   var _props$location$state = props.location.state,
       cart = _props$location$state.cart,
       order = _props$location$state.order,
       total = _props$location$state.total;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Your confirmation #", order.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Total Price: $", total), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You have successfully checked out! The following is a list of all items in your order"), cart.length && cart.map(function (product) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, product.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quantity: ", product.quantity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Your confirmation #", order.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Total Price: $", total), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You have successfully checked out! The following is a list of all items in your order"), cart.length && cart.map(function (product, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      key: index
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, product.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quantity: ", product.quantity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       src: product.imageUrl
     }));
   }));
@@ -722,7 +723,7 @@ function (_React$Component) {
     key: "persistentData",
     value: function persistentData() {
       var cart = this.props.cart;
-      sessionStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
       this.props.getCart(this.props.order.id);
     }
   }, {
@@ -747,7 +748,7 @@ function (_React$Component) {
       });
       this.props.checkOutOrder(this.props.order.id).then(function () {
         return _this4.props.getOrder(_this4.props.user);
-      });
+      }); // .then(() => this.props.getCart(this.props.order.id))
     }
   }, {
     key: "findTotal",
@@ -763,7 +764,7 @@ function (_React$Component) {
       var _this5 = this;
 
       var order = this.props.order;
-      var cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+      var cart = JSON.parse(localStorage.getItem('cart')) || [];
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "order"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your Orders"), !cart.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Your Cart is empty!") : cart.map(function (product, index) {
@@ -1107,7 +1108,7 @@ function (_React$Component) {
     key: "persistentData",
     value: function persistentData() {
       var cart = this.props.cart;
-      sessionStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
     }
   }, {
     key: "render",
@@ -1366,6 +1367,10 @@ function (_Component) {
         exact: true,
         path: "/products/:productId/edit",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["EditProduct"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        exact: true,
+        path: "/checkout",
+        component: _components_checkout__WEBPACK_IMPORTED_MODULE_7__["default"]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         exact: true,
         path: "/"
@@ -1689,9 +1694,7 @@ var checkOutOrder = function checkOutOrder(order) {
     type: CHECKOUT_ORDER,
     order: order
   };
-}; // GetOrdersThunk - Fetch existing cart from user session store
-// takes in a userId, uses its cookie to grab cart
-
+};
 
 var thunkAddNewOrder = function thunkAddNewOrder(user) {
   return (

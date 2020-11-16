@@ -1,7 +1,6 @@
 import React from 'react'
 
 const CheckOut = props => {
-  console.log(props)
   const {cart, order, total} = props.location.state
   return (
     <div>
@@ -12,9 +11,9 @@ const CheckOut = props => {
         in your order
       </p>
       {cart.length &&
-        cart.map(product => {
+        cart.map((product, index) => {
           return (
-            <div>
+            <div key={index}>
               <p>{product.name}</p>
               <p>Quantity: {product.quantity}</p>
               <img src={product.imageUrl} />
