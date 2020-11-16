@@ -2,7 +2,8 @@ import React from 'react'
 import ProductCard from './product-card'
 import {connect} from 'react-redux'
 import {fetchAllProducts} from '../store/all-products'
-import {thunkAddProductToOrder} from '../store/order'
+import {fetchCart, thunkAddProductToCart} from '../store/orderproduct'
+import {thunkAddNewOrder} from '../store/order'
 import {Link} from 'react-router-dom'
 
 class AllProducts extends React.Component {
@@ -12,13 +13,24 @@ class AllProducts extends React.Component {
   }
   componentDidMount() {
     this.props.fetchProducts()
+    this.props
+      .loadOrder(this.props.user)
+      .then(() => this.props.getCart(this.props.order.id))
   }
 
-  handleClick(userId, productId) {
-    console.log('This is clicked')
-    this.props.addProductToOrder(userId, productId)
+  handleClick(order, product) {
+    this.props
+      .addProductToOrder(order, product)
+      .then(() => this.persistentData())
   }
+
+  persistentData() {
+    const cart = this.props.cart
+    sessionStorage.setItem('cart', JSON.stringify(cart))
+  }
+
   render() {
+    console.log(this.props.user)
     return (
       <div className="all-products">
         {this.props.isAdmin && (
@@ -33,6 +45,7 @@ class AllProducts extends React.Component {
               <ProductCard
                 key={product.id}
                 product={product}
+                order={this.props.order}
                 handleClick={this.handleClick}
               />
             )
@@ -48,15 +61,20 @@ class AllProducts extends React.Component {
 const mapStateToProps = state => {
   return {
     isAdmin: state.user.isAdmin,
-    products: state.products
+    products: state.products,
+    order: state.order,
+    user: state.user,
+    cart: state.cart
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchProducts: () => dispatch(fetchAllProducts()),
-    addProductToOrder: (userId, productId) =>
-      dispatch(thunkAddProductToOrder(userId, productId))
+    addProductToOrder: (order, product) =>
+      dispatch(thunkAddProductToCart(order, product)),
+    loadOrder: user => dispatch(thunkAddNewOrder(user)),
+    getCart: orderId => dispatch(fetchCart(orderId))
   }
 }
 
