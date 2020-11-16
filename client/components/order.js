@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import OrderCard from './order-card'
 import {
   fetchCart,
@@ -11,9 +12,16 @@ import {thunkCheckOut, thunkAddNewOrder} from '../store/order'
 class Order extends React.Component {
   constructor() {
     super()
+    this.state = {
+      isCheckedOut: false,
+      cart: [],
+      order: {},
+      total: 0
+    }
     this.removeProduct = this.removeProduct.bind(this)
     this.persistentData = this.persistentData.bind(this)
     this.checkOut = this.checkOut.bind(this)
+    this.findTotal = this.findTotal.bind(this)
   }
   componentDidMount() {
     this.props.getCart(this.props.order.id).then(() => this.persistentData())
@@ -32,9 +40,22 @@ class Order extends React.Component {
   }
 
   checkOut() {
+    this.setState({
+      isCheckedOut: true,
+      cart: this.props.cart,
+      order: this.props.order,
+      total: this.findTotal()
+    })
     this.props
       .checkOutOrder(this.props.order.id)
       .then(() => this.props.getOrder(this.props.user))
+  }
+
+  findTotal() {
+    return this.props.cart.reduce((accum, product) => {
+      const price = product.price * product.quantity
+      return accum + price
+    }, 0)
   }
 
   render() {
@@ -56,9 +77,18 @@ class Order extends React.Component {
             />
           ))
         )}
+        <h3>Total Amount: ${this.findTotal()}</h3>
         <button type="button" onClick={this.checkOut}>
           CheckOut
         </button>
+        {this.state.isCheckedOut && (
+          <Redirect
+            to={{
+              pathname: '/checkout',
+              state: this.state
+            }}
+          />
+        )}
       </div>
     )
   }

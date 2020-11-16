@@ -42,7 +42,6 @@ export const fetchCart = orderId => {
 export const thunkAddProductToCart = (order, product) => {
   return async dispatch => {
     try {
-      console.log(typeof product.price)
       const orderProduct = {
         name: product.name,
         price: product.price,
