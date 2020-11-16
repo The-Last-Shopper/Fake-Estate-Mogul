@@ -5,7 +5,7 @@ class OrderCard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      quantity: ''
+      quantity: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -15,9 +15,13 @@ class OrderCard extends React.Component {
     this.setState({quantity: e.target.value})
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
     e.preventDefault()
-    // EDIT THUNK
+    const product = this.props.product
+
+    this.props
+      .editProduct(product.orderId, product.productId, this.state.quantity)
+      .then(() => this.props.persistentData())
   }
 
   render() {
@@ -27,12 +31,10 @@ class OrderCard extends React.Component {
         <h4>Name: {product.name}</h4>
         <img src={product.imageUrl} />
         <p>{product.description}</p>
+
         <p>Price: ${product.price} </p>
-        <button type="button" onClick={() => this.props.removeProduct(product)}>
-          Remove from cart
-        </button>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="quantity">Quantity</label>
+          <label htmlFor="quantity">Quantity: {product.quantity}</label>
           <input
             name="quantity"
             type="number"
@@ -43,6 +45,9 @@ class OrderCard extends React.Component {
           />
           <button type="submit">Submit</button>
         </form>
+        <button type="button" onClick={() => this.props.removeProduct(product)}>
+          Remove from cart
+        </button>
       </div>
     )
   }

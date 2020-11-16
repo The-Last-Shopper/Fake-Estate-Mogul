@@ -3,9 +3,15 @@ import axios from 'axios'
 const initialState = []
 
 const ADD_NEW_ORDER = 'ADD_NEW_ORDER'
+const CHECKOUT_ORDER = 'CHECKOUT_ORDER'
 
 const addNewOrder = order => ({
   type: ADD_NEW_ORDER,
+  order
+})
+
+const checkOutOrder = order => ({
+  type: CHECKOUT_ORDER,
   order
 })
 // GetOrdersThunk - Fetch existing cart from user session store
@@ -26,9 +32,22 @@ export const thunkAddNewOrder = user => {
   }
 }
 
+export const thunkCheckOut = orderId => {
+  return async dispatch => {
+    try {
+      const checkedOutOrder = await axios.put(`/api/order/${orderId}`)
+      dispatch(checkOutOrder(checkedOutOrder))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_NEW_ORDER:
+      return action.order
+    case CHECKOUT_ORDER:
       return action.order
     default:
       return state
