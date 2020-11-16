@@ -6,6 +6,7 @@ function isAdmin(req, res, next) {
     next(err)
   } else {
     console.log('admin check OK')
+    next()
   }
 }
 
@@ -16,6 +17,7 @@ function isAuthorized(req, res, next) {
     err.status = '401'
     next(err)
   } else {
+    next()
     console.log('auth check OK')
   }
 }
