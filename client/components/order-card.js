@@ -5,7 +5,7 @@ class OrderCard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      quantity: 0
+      quantity: 1
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -43,7 +43,7 @@ class OrderCard extends React.Component {
           <input
             name="quantity"
             type="number"
-            min="0"
+            min="1"
             step="1"
             value={this.state.quantity}
             onChange={this.handleChange}

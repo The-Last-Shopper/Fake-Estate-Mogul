@@ -67,7 +67,7 @@ class Order extends React.Component {
     let cart = JSON.parse(localStorage.getItem('cart')) || []
     return (
       <div className="order">
-        <h1>Your Orders</h1>
+        <h1>Your Cart</h1>
         {!cart.length ? (
           <h3>Your Cart is empty!</h3>
         ) : (
@@ -83,7 +83,7 @@ class Order extends React.Component {
         )}
         <h3>Total Amount: ${this.findTotal()}</h3>
         <Button variant="success" type="button" onClick={this.checkOut}>
-          CheckOut
+          Check Out
         </Button>
         {this.state.isCheckedOut && (
           <Redirect

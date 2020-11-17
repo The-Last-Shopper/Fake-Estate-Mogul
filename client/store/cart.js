@@ -39,13 +39,14 @@ export const fetchCart = orderId => {
     }
   }
 }
-export const thunkAddProductToCart = (order, product, userId) => {
+
+export const thunkAddProductToCart = (order, product, quantity, userId) => {
   return async dispatch => {
     try {
       const orderProduct = {
         name: product.name,
         price: product.price,
-        quantity: 1,
+        quantity: quantity,
         orderId: order.id,
         productId: product.id,
         imageUrl: product.imageUrl,

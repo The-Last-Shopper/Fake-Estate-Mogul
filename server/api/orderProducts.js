@@ -24,6 +24,7 @@ router.post('/', isAuthorized, async (req, res, next) => {
     const orderProduct = await OrderProduct.create({
       name: body.name,
       price: body.price,
+      quantity: body.quantity,
       orderId: body.orderId,
       productId: body.productId,
       imageUrl: body.imageUrl,

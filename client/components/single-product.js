@@ -8,8 +8,13 @@ import {toast} from 'react-toastify'
 class SingleProduct extends React.Component {
   constructor() {
     super()
+    this.state = {
+      inCart: false,
+      quantity: 1
+    }
     this.handleClick = this.handleClick.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
@@ -23,9 +28,23 @@ class SingleProduct extends React.Component {
 
   handleClick(order, product) {
     this.props
-      .addProductToCart(order, product, this.props.userId)
+      .addProductToCart(
+        order,
+        product,
+        this.state.quantity,
+        this.this.props.userId
+      )
       .then(() => this.persistentData())
+      .then(
+        this.setState({
+          inCart: true
+        })
+      )
     this.notify()
+  }
+
+  handleChange(e) {
+    this.setState({quantity: e.target.value})
   }
 
   handleDelete() {
@@ -46,12 +65,24 @@ class SingleProduct extends React.Component {
         <img src={product.imageUrl} />
         <p>Price: {product.price} </p>
         <p>Description: {product.description}</p>
-        <button
-          onClick={() => this.handleClick(this.props.order, product)}
-          type="button"
-        >
-          Add To Cart
-        </button>
+        <form>
+          <label htmlFor="quantity">Quantity: </label>
+          <input
+            name="quantity"
+            type="number"
+            min="1"
+            step="1"
+            value={this.state.quantity}
+            onChange={this.handleChange}
+          />
+          <button
+            onClick={() => this.handleClick(this.props.order, product)}
+            type="button"
+            disabled={this.state.inCart}
+          >
+            Add To Cart
+          </button>
+        </form>
         {this.props.isAdmin && (
           <div className="admin-buttons">
             <Link to={`/products/${product.id}/edit`}>
@@ -79,8 +110,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: productId => dispatch(fetchSingleProduct(productId)),
-    addProductToCart: (order, product, userId) =>
-      dispatch(thunkAddProductToCart(order, product, userId)),
+    addProductToCart: (order, product, quantity, userId) =>
+      dispatch(thunkAddProductToCart(order, product, quantity, userId)),
     deleteProduct: (productId, history) =>
       dispatch(deleteProduct(productId, history)),
     getCart: orderId => dispatch(fetchCart(orderId))
