@@ -40,12 +40,13 @@ export const pushNewProduct = productInfo => {
   }
 }
 
+const initialState = {products: [], loading: true}
 //REDUCER
 
-export default (state = [], action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_PRODUCTS:
-      return action.products
+      return {...state, loading: false, products: action.products}
     case ADD_NEW_PRODUCT:
       return [...state, action.newProduct]
     default:

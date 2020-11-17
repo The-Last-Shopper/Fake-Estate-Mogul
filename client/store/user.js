@@ -40,7 +40,6 @@ export const auth = (userInfo, method) => async dispatch => {
   }
 
   try {
-    console.log(res)
     dispatch(getUser(res.data))
     history.push('/')
   } catch (dispatchOrHistoryErr) {

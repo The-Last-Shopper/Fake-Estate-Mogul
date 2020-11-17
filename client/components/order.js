@@ -8,6 +8,7 @@ import {
   thunkEditProductFromCart
 } from '../store/orderproduct'
 import {thunkCheckOut, thunkAddNewOrder} from '../store/order'
+import Button from 'react-bootstrap/Button'
 
 class Order extends React.Component {
   constructor() {
@@ -60,7 +61,6 @@ class Order extends React.Component {
   }
 
   render() {
-    const order = this.props.order
     let cart = JSON.parse(localStorage.getItem('cart')) || []
     return (
       <div className="order">
@@ -79,9 +79,9 @@ class Order extends React.Component {
           ))
         )}
         <h3>Total Amount: ${this.findTotal()}</h3>
-        <button type="button" onClick={this.checkOut}>
+        <Button variant="success" type="button" onClick={this.checkOut}>
           CheckOut
-        </button>
+        </Button>
         {this.state.isCheckedOut && (
           <Redirect
             to={{
