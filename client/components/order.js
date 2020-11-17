@@ -47,9 +47,8 @@ class Order extends React.Component {
       total: this.findTotal()
     })
     this.props
-      .checkOutOrder(this.props.order.id)
+      .checkOutOrder(this.props.order.id, this.state.total)
       .then(() => this.props.getOrder(this.props.user))
-    // .then(() => this.props.getCart(this.props.order.id))
   }
 
   findTotal() {

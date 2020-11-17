@@ -2,13 +2,29 @@ const router = require('express').Router()
 const {isAuthorized} = require('../auth-middleware')
 const {Order, OrderProduct, Product} = require('../db/models')
 
+// Find All of a user's orders
+router.get('/:userId', async (req, res, next) => {
+  try {
+    let userOrders = await Order.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    res.json(userOrders)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+// Find existing or Create new Order
 router.post('/', async (req, res, next) => {
   try {
     const [order, isCreated] = await Order.findOrCreate({
       where: {
         userId: req.body.userId,
         isCheckedOut: false
-      }
+      },
+      defaults: {confirmationNum: req.body.confirmationNum}
     })
     res.json(order)
   } catch (error) {
@@ -16,11 +32,15 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+// Checkout Cart
 router.put('/:orderId', async (req, res, next) => {
   //might have to send userId through body or find order by UserId association
   try {
     const updateCheckOut = await Order.findByPk(req.params.orderId)
-    await updateCheckOut.update({isCheckedOut: true})
+    await updateCheckOut.update({
+      isCheckedOut: true,
+      totalPrice: req.body.totalPrice
+    })
     res.json(updateCheckOut)
   } catch (error) {
     console.error(error)
