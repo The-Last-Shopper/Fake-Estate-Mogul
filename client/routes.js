@@ -14,7 +14,6 @@ import {
   UsersInfo
 } from './components'
 import {me} from './store'
-import {thunkAddNewOrder} from './store/order'
 import CheckOut from './components/checkout'
 
 /**
