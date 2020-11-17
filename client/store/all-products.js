@@ -35,7 +35,7 @@ export const pushNewProduct = productInfo => {
       const newProduct = await axios.post('/api/products', productInfo)
       dispatch(addProduct(newProduct))
     } catch (err) {
-      console.error('sum in done happen trying to add product', error)
+      console.error('sum in done happen trying to add product', err)
     }
   }
 }

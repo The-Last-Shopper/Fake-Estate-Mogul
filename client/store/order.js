@@ -2,48 +2,51 @@ import axios from 'axios'
 
 const initialState = []
 
-const GET_ORDERS = 'GET_ORDERS' // Come back to this when on sessions to do
-const ADD_PRODUCT_TO_ORDER = 'ADD_PRODUCT_TO_ORDER'
+const ADD_NEW_ORDER = 'ADD_NEW_ORDER'
+const CHECKOUT_ORDER = 'CHECKOUT_ORDER'
 
-const getOrders = orders => ({
-  type: GET_ORDERS,
-  orders
+const addNewOrder = order => ({
+  type: ADD_NEW_ORDER,
+  order
 })
 
-// GetOrdersThunk - Fetch existing cart from user session store
-// takes in a userId, uses its cookie to grab cart
-
-const addProductToOrder = product => ({
-  type: ADD_PRODUCT_TO_ORDER,
-  product
+const checkOutOrder = order => ({
+  type: CHECKOUT_ORDER,
+  order
 })
 
-export const thunkAddProductToOrder = (userId, productId) => {
+export const thunkAddNewOrder = user => {
   return async dispatch => {
     try {
-      const order = await axios.post('/api/order', {userId: userId})
-      const product = await axios.get(`/api/products/${productId}`)
-      const orderProduct = {
-        price: product.data.price,
-        quantity: 1, ////---->>>> TAKE VALUE FROM UI
-        orderId: order.data[0].id,
-        productId: productId,
-        image: product.data.imageUrl
+      let userId = user.id
+      if (!user.id) {
+        userId = null
       }
-      await axios.post('/api/orderProducts/addingProduct', orderProduct)
-      dispatch(addProductToOrder(orderProduct))
+      const newOrder = await axios.post('/api/order', {userId: userId})
+      dispatch(addNewOrder(newOrder.data))
     } catch (error) {
-      console.log(error)
+      console.error('unable to post new Order')
     }
   }
 }
 
-export default (state = [], action) => {
+export const thunkCheckOut = orderId => {
+  return async dispatch => {
+    try {
+      const {data: checkedOutOrder} = await axios.put(`/api/order/${orderId}`)
+      dispatch(checkOutOrder(checkedOutOrder))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_ORDERS:
-      return action.orders
-    case ADD_PRODUCT_TO_ORDER:
-      return [...state, action.product]
+    case ADD_NEW_ORDER:
+      return action.order
+    case CHECKOUT_ORDER:
+      return action.order
     default:
       return state
   }

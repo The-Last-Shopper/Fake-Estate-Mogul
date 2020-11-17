@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {thunkAddProductToOrder} from '../store/order'
+import {fetchCart, thunkAddProductToCart} from '../store/orderproduct'
 import {Link} from 'react-router-dom'
 import {deleteProduct, fetchSingleProduct} from '../store/single-product'
 
@@ -13,14 +13,23 @@ class SingleProduct extends React.Component {
 
   componentDidMount() {
     this.props.getSingleProduct(this.props.match.params.productId)
+    this.props.getCart(this.props.order.id)
   }
 
-  handleClick(userId, productId) {
-    this.props.addProductToOrder(userId, productId)
+  handleClick(order, product) {
+    this.props
+      .addProductToCart(order, product)
+      .then(() => this.persistentData())
   }
+
   handleDelete() {
     console.log('button was clicked')
     this.props.deleteProduct(this.props.product.id, this.props.history)
+  }
+
+  persistentData() {
+    const cart = this.props.cart
+    localStorage.setItem('cart', JSON.stringify(cart))
   }
 
   render() {
@@ -32,7 +41,7 @@ class SingleProduct extends React.Component {
         <p>Price: {product.price} </p>
         <p>Description: {product.description}</p>
         <button
-          onClick={() => this.handleClick(null, product.id)}
+          onClick={() => this.handleClick(this.props.order, product)}
           type="button"
         >
           Add To Cart
@@ -54,17 +63,20 @@ class SingleProduct extends React.Component {
 const mapStateToProps = state => {
   return {
     isAdmin: state.user.isAdmin,
-    product: state.product
+    product: state.product,
+    order: state.order,
+    cart: state.cart
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: productId => dispatch(fetchSingleProduct(productId)),
-    addProductToOrder: (userId, productId) =>
-      dispatch(thunkAddProductToOrder(userId, productId)),
+    addProductToCart: (order, product) =>
+      dispatch(thunkAddProductToCart(order, product)),
     deleteProduct: (productId, history) =>
-      dispatch(deleteProduct(productId, history))
+      dispatch(deleteProduct(productId, history)),
+    getCart: orderId => dispatch(fetchCart(orderId))
   }
 }
 

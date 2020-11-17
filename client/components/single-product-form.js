@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {pushNewProduct} from '../store/all-products'
 import {putSingleProduct, fetchSingleProduct} from '../store/single-product'
 
@@ -38,7 +37,6 @@ class ProductForm extends React.Component {
   }
 
   render() {
-    const product = this.props.product
     return (
       <div>
         <form onSubmit={e => this.handleSubmit(e)}>

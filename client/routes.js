@@ -10,9 +10,12 @@ import {
   SingleProduct,
   Order,
   EditProduct,
-  AddProduct
+  AddProduct,
+  UsersInfo
 } from './components'
 import {me} from './store'
+import {thunkAddNewOrder} from './store/order'
+import CheckOut from './components/checkout'
 
 /**
  * COMPONENT
@@ -30,20 +33,36 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        {/* {isLoggedIn && (
+        {isLoggedIn && (
           <Switch>
-            <Route path="/home" component={UserHome} />
+            <Route exact path="/" component={UserHome} />
+            <Route exact path="/users" component={UsersInfo} />
+            <Route exact path="/products" component={AllProducts} />
+            <Route exact path="/products/add" component={AddProduct} />
+            <Route
+              exact
+              path="/products/:productId"
+              component={SingleProduct}
+            />
+            <Route exact path="/cart" component={Order} />
+            <Route
+              exact
+              path="/products/:productId/edit"
+              component={EditProduct}
+            />
+            <Route exact path="/checkout" component={CheckOut} />
           </Switch>
-        )} */}
+        )}
         {/* Displays our Login component as a fallback */}
         <Route exact path="/">
-          <Redirect to="/products" />
+          <Redirect to="/login" />
         </Route>
         <Route exact path="/products" component={AllProducts} />
-        <Route exact path="/products/add" component={AddProduct} />
+        {/* <Route exact path="/products/add" component={AddProduct} /> */}
         <Route exact path="/products/:productId" component={SingleProduct} />
         <Route exact path="/cart" component={Order} />
         <Route exact path="/products/:productId/edit" component={EditProduct} />
+        <Route exact path="/checkout" component={CheckOut} />
       </Switch>
     )
   }
@@ -53,12 +72,12 @@ class Routes extends Component {
  * CONTAINER
  */
 const mapState = state => {
-  console.log('isAdmin?: ', state.user.isAdmin)
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    isAdmin: state.user.isAdmin
+    isAdmin: state.user.isAdmin,
+    user: state.user
   }
 }
 
