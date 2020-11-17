@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {OrderProduct, Order} = require('../db/models')
 const {isAuthorized} = require('../auth-middleware')
 
+//Not secure: We should use USerId to look for order and eager load. No way to access UserId with current set up.
 router.get('/:orderId', async (req, res, next) => {
   try {
     const orderId = req.params.orderId
@@ -17,7 +18,7 @@ router.get('/:orderId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAuthorized, async (req, res, next) => {
   try {
     const body = req.body
     const orderProduct = await OrderProduct.create({
@@ -34,6 +35,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+//Not secure: We should use USerId to look for order and eager load. No way to access UserId with current set up.
 router.delete('/:orderId/:productId', async (req, res, next) => {
   try {
     await OrderProduct.destroy({
@@ -48,7 +50,7 @@ router.delete('/:orderId/:productId', async (req, res, next) => {
   }
 })
 
-router.put('/:orderId/:productId', async (req, res, next) => {
+router.put('/:orderId/:productId', isAuthorized, async (req, res, next) => {
   try {
     const updateOrder = await OrderProduct.findOne({
       where: {

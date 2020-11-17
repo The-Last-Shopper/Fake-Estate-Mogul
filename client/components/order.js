@@ -6,8 +6,8 @@ import {
   fetchCart,
   thunkRemoveProductFromCart,
   thunkEditProductFromCart
-} from '../store/orderproduct'
-import {thunkCheckOut, thunkAddNewOrder} from '../store/order'
+} from '../store/cart'
+import {thunkCheckOut, fetchOrder} from '../store/order'
 import Button from 'react-bootstrap/Button'
 
 class Order extends React.Component {
@@ -36,7 +36,11 @@ class Order extends React.Component {
 
   removeProduct(product) {
     this.props
-      .removeProductFromCart(product.orderId, product.productId)
+      .removeProductFromCart(
+        product.orderId,
+        product.productId,
+        this.props.user.id
+      )
       .then(() => this.persistentData())
   }
 
@@ -48,7 +52,7 @@ class Order extends React.Component {
       total: this.findTotal()
     })
     this.props
-      .checkOutOrder(this.props.order.id, this.findTotal())
+      .checkOutOrder(this.props.order.id, this.findTotal(), this.props.user.id)
       .then(() => this.props.getOrder(this.props.user))
   }
 
@@ -102,12 +106,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getCart: orderId => dispatch(fetchCart(orderId)),
-  removeProductFromCart: (orderId, productId) =>
-    dispatch(thunkRemoveProductFromCart(orderId, productId)),
-  editProduct: (orderId, productId, quantity) =>
-    dispatch(thunkEditProductFromCart(orderId, productId, quantity)),
-  checkOutOrder: (orderId, totalPrice) =>
-    dispatch(thunkCheckOut(orderId, totalPrice)),
+  removeProductFromCart: (orderId, productId, userId) =>
+    dispatch(thunkRemoveProductFromCart(orderId, productId, userId)),
+  editProduct: (orderId, productId, quantity, userId) =>
+    dispatch(thunkEditProductFromCart(orderId, productId, quantity, userId)),
+  checkOutOrder: (orderId, totalPrice, userId) =>
+    dispatch(thunkCheckOut(orderId, totalPrice, userId)),
   getOrder: user => dispatch(thunkAddNewOrder(user))
 })
 

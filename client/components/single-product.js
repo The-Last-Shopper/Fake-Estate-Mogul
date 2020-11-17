@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCart, thunkAddProductToCart} from '../store/orderproduct'
+import {fetchCart, thunkAddProductToCart} from '../store/cart'
 import {Link} from 'react-router-dom'
 import {deleteProduct, fetchSingleProduct} from '../store/single-product'
 import {toast} from 'react-toastify'
@@ -23,7 +23,7 @@ class SingleProduct extends React.Component {
 
   handleClick(order, product) {
     this.props
-      .addProductToCart(order, product)
+      .addProductToCart(order, product, this.props.userId)
       .then(() => this.persistentData())
     this.notify()
   }
@@ -69,6 +69,7 @@ class SingleProduct extends React.Component {
 const mapStateToProps = state => {
   return {
     isAdmin: state.user.isAdmin,
+    userId: state.user.id,
     product: state.product,
     order: state.order,
     cart: state.cart
@@ -78,8 +79,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: productId => dispatch(fetchSingleProduct(productId)),
-    addProductToCart: (order, product) =>
-      dispatch(thunkAddProductToCart(order, product)),
+    addProductToCart: (order, product, userId) =>
+      dispatch(thunkAddProductToCart(order, product, userId)),
     deleteProduct: (productId, history) =>
       dispatch(deleteProduct(productId, history)),
     getCart: orderId => dispatch(fetchCart(orderId))

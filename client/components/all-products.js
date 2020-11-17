@@ -2,8 +2,8 @@ import React from 'react'
 import ProductCard from './product-card'
 import {connect} from 'react-redux'
 import {fetchAllProducts} from '../store/all-products'
-import {fetchCart, thunkAddProductToCart} from '../store/orderproduct'
-import {thunkAddNewOrder} from '../store/order'
+import {fetchCart, thunkAddProductToCart} from '../store/cart'
+import {fetchOrder} from '../store/order'
 import {Link} from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import {toast} from 'react-toastify'
@@ -25,7 +25,7 @@ class AllProducts extends React.Component {
   }
   handleClick(order, product) {
     this.props
-      .addProductToOrder(order, product)
+      .addProductToOrder(order, product, this.props.user.id)
       .then(() => this.persistentData())
     this.notify()
   }
@@ -77,9 +77,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchProducts: () => dispatch(fetchAllProducts()),
-    addProductToOrder: (order, product) =>
-      dispatch(thunkAddProductToCart(order, product)),
-    loadOrder: user => dispatch(thunkAddNewOrder(user)),
+    addProductToOrder: (order, product, userId) =>
+      dispatch(thunkAddProductToCart(order, product, userId)),
+    loadOrder: user => dispatch(fetchOrder(user)),
     getCart: orderId => dispatch(fetchCart(orderId))
   }
 }

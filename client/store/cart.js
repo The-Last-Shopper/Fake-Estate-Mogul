@@ -39,7 +39,7 @@ export const fetchCart = orderId => {
     }
   }
 }
-export const thunkAddProductToCart = (order, product) => {
+export const thunkAddProductToCart = (order, product, userId) => {
   return async dispatch => {
     try {
       const orderProduct = {
@@ -51,7 +51,7 @@ export const thunkAddProductToCart = (order, product) => {
         imageUrl: product.imageUrl,
         description: product.description
       }
-      await axios.post('/api/orderProducts/', orderProduct)
+      await axios.post('/api/orderProducts/', {...orderProduct, userId})
       dispatch(addProductToCart(orderProduct))
     } catch (error) {
       console.log(error)
@@ -59,10 +59,10 @@ export const thunkAddProductToCart = (order, product) => {
   }
 }
 
-export const thunkRemoveProductFromCart = (orderId, productId) => {
+export const thunkRemoveProductFromCart = (orderId, productId, userId) => {
   return async dispatch => {
     try {
-      await axios.delete(`/api/orderProducts/${orderId}/${productId}`)
+      await axios.delete(`/api/orderProducts/${orderId}/${productId}`, {userId})
       dispatch(removeProductFromCart(productId))
     } catch (error) {
       console.log(error)
@@ -70,12 +70,17 @@ export const thunkRemoveProductFromCart = (orderId, productId) => {
   }
 }
 
-export const thunkEditProductFromCart = (orderId, productId, quantity) => {
+export const thunkEditProductFromCart = (
+  orderId,
+  productId,
+  quantity,
+  userId
+) => {
   return async dispatch => {
     try {
       const updatedProduct = await axios.put(
         `/api/orderProducts/${orderId}/${productId}`,
-        {quantity: Number(quantity)}
+        {quantity: Number(quantity), userId}
       )
       dispatch(editProductFromCart(updatedProduct.data, productId))
     } catch (error) {

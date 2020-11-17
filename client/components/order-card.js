@@ -20,7 +20,12 @@ class OrderCard extends React.Component {
     const product = this.props.product
 
     this.props
-      .editProduct(product.orderId, product.productId, this.state.quantity)
+      .editProduct(
+        product.orderId,
+        product.productId,
+        this.state.quantity,
+        this.props.user.id
+      )
       .then(() => this.props.persistentData())
   }
 
@@ -54,7 +59,8 @@ class OrderCard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  order: state.order
+  order: state.order,
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({})

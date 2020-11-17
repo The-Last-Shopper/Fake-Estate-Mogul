@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-const initialState = []
+const initialState = {}
 
-const ADD_NEW_ORDER = 'ADD_NEW_ORDER'
+const GET_ORDER = 'GET_ORDER'
 const CHECKOUT_ORDER = 'CHECKOUT_ORDER'
 
-const addNewOrder = order => ({
-  type: ADD_NEW_ORDER,
+const getOrder = order => ({
+  type: GET_ORDER,
   order
 })
 
@@ -15,13 +15,15 @@ const checkOutOrder = order => ({
   order
 })
 
-export const thunkAddNewOrder = user => {
+export const fetchOrder = user => {
   return async dispatch => {
     try {
       let userId = user.id
       if (!user.id) {
         userId = null
       }
+
+      //generate confirmation #
       let randomNum = '',
         charset = '0123456789',
         i = 0
@@ -33,22 +35,25 @@ export const thunkAddNewOrder = user => {
           )
         i++
       }
+
       const newOrder = await axios.post('/api/order', {
         userId: userId,
         confirmationNum: randomNum
       })
-      dispatch(addNewOrder(newOrder.data))
+
+      dispatch(getOrder(newOrder.data))
     } catch (error) {
       console.error('unable to post new Order')
     }
   }
 }
 
-export const thunkCheckOut = (orderId, totalPrice) => {
+export const thunkCheckOut = (orderId, totalPrice, userId) => {
   return async dispatch => {
     try {
       const {data: checkedOutOrder} = await axios.put(`/api/order/${orderId}`, {
-        totalPrice: totalPrice
+        totalPrice,
+        userId
       })
       dispatch(checkOutOrder(checkedOutOrder))
     } catch (error) {
@@ -59,7 +64,7 @@ export const thunkCheckOut = (orderId, totalPrice) => {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ADD_NEW_ORDER:
+    case GET_ORDER:
       return action.order
     case CHECKOUT_ORDER:
       return action.order
