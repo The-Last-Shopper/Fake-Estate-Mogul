@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchCart, thunkAddProductToCart} from '../store/orderproduct'
 import {Link} from 'react-router-dom'
 import {deleteProduct, fetchSingleProduct} from '../store/single-product'
+import {toast} from 'react-toastify'
 
 class SingleProduct extends React.Component {
   constructor() {
@@ -16,10 +17,15 @@ class SingleProduct extends React.Component {
     this.props.getCart(this.props.order.id)
   }
 
+  notify() {
+    toast('Added to Cart!')
+  }
+
   handleClick(order, product) {
     this.props
       .addProductToCart(order, product)
       .then(() => this.persistentData())
+    this.notify()
   }
 
   handleDelete() {
