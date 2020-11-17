@@ -29,10 +29,10 @@ const User = db.define('user', {
     }
   },
   billingInfo: {
-    type: Sequelize.STRING,
-    validate: {
-      isCreditCard: true
-    }
+    type: Sequelize.STRING
+    // validate: {
+    //   isCreditCard: true
+    // }
   },
   imageUrl: {
     type: Sequelize.STRING,
@@ -96,6 +96,8 @@ const setSaltAndPassword = user => {
     user.salt = User.generateSalt()
     user.password = User.encryptPassword(user.password(), user.salt())
   }
+  // user.salt = User.generateSalt()
+  // user.password = User.encryptPassword(user.password(), user.salt())
 }
 
 User.beforeCreate(setSaltAndPassword)
