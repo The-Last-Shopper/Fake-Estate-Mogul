@@ -162,7 +162,10 @@ async function seed() {
     ordersToCreate.push(
       Order.create({
         userId: i % 10 === 0 ? null : randomUserID,
-        isCheckedOut: !!usersWithExistingCarts.includes(randomUserID)
+        isCheckedOut: usersWithExistingCarts.includes(randomUserID),
+        confirmationNum: `${Math.floor(Math.random() * 10000)}-${Math.floor(
+          Math.random() * 100000
+        )}`
       })
     )
     usersWithExistingCarts.push(randomUserID)
