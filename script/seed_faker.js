@@ -6,7 +6,58 @@ async function seed() {
   await db.sync({force: true})
   console.log('db synced')
 
-  const usersToCreate = []
+  const usersToCreate = [
+    User.create({
+      name: 'Cody',
+      email: 'cody@email.com',
+      password: '123',
+      billingInfo: '4916657956659033',
+      address: '123 Lexington Avenue',
+      imageUrl: faker.internet.avatar()
+    }),
+    User.create({
+      name: 'Murphy',
+      email: 'murphy@email.com',
+      password: '123',
+      billingInfo: '4194083706017690',
+      address: '321 Woodhaven Boulevard',
+      imageUrl: faker.internet.avatar()
+    }),
+    User.create({
+      name: 'Ricky',
+      email: 'ricky@email.com',
+      password: '123',
+      billingInfo: '5128081712801139',
+      address: '321 Flushing Ave',
+      imageUrl: faker.internet.avatar()
+    }),
+    User.create({
+      name: 'Danny',
+      email: 'Danny@email.com',
+      password: '123',
+      billingInfo: '5488857697066408',
+      address: '321 Grand Street',
+      imageUrl: faker.internet.avatar()
+    }),
+    User.create({
+      name: 'James',
+      email: 'james@email.com',
+      password: '123',
+      billingInfo: '5114348265658398',
+      address: '321 Marcy Street',
+      imageUrl: faker.internet.avatar()
+    }),
+    User.create({
+      name: 'Admin',
+      email: 'admin@email.com',
+      password: 'admin',
+      billingInfo: '5114348265658398',
+      address: '543 Chinatown Street',
+      isAdmin: true,
+      imageUrl: faker.internet.avatar()
+    })
+  ]
+
   let usersWithExistingCarts = []
   const productsToCreate = [
     Product.create({
@@ -111,7 +162,10 @@ async function seed() {
     ordersToCreate.push(
       Order.create({
         userId: i % 10 === 0 ? null : randomUserID,
-        isCheckedOut: !!usersWithExistingCarts.includes(randomUserID)
+        isCheckedOut: usersWithExistingCarts.includes(randomUserID),
+        confirmationNum: `${Math.floor(Math.random() * 10000)}-${Math.floor(
+          Math.random() * 100000
+        )}`
       })
     )
     usersWithExistingCarts.push(randomUserID)
