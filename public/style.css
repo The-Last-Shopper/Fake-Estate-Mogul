@@ -50,3 +50,8 @@ form div {
   -o-background-size: cover;
   background-size: cover;
 }
+
+.user-info {
+  text-decoration: underline;
+  font-weight: bold;
+}
