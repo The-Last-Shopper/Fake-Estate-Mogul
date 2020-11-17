@@ -28,6 +28,15 @@ const Product = db.define('products', {
   },
   quantity: {
     type: Sequelize.INTEGER
+  },
+  type: {
+    type: Sequelize.ENUM(
+      'Bungalow',
+      'Apartment',
+      'Condo',
+      'Penthouse',
+      'Mansion'
+    )
   }
 })
 

@@ -56,6 +56,7 @@ class AllProducts extends React.Component {
             </Button>
           </Link>
         )}
+
         <h2>All Products</h2>
         {this.props.products.map(product => {
           return (
