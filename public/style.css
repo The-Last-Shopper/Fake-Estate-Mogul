@@ -32,3 +32,21 @@ form div {
   color: white;
   margin-left: 1em;
 }
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.center-color {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.all-products {
+  background: url('Websit\ Image.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
