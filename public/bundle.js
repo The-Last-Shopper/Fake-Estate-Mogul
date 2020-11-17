@@ -979,14 +979,13 @@ function (_React$Component) {
     value: function componentDidMount() {
       if (this.props.name === 'update') {
         this.props.getSingleProduct(this.props.match.params.productId);
+        this.setState({
+          name: this.props.product.name,
+          description: this.props.product.description,
+          price: this.props.product.price,
+          imageUrl: this.props.product.imageUrl
+        });
       }
-
-      this.setState({
-        name: this.props.product.name,
-        description: this.props.product.description,
-        price: this.props.product.price,
-        imageUrl: this.props.product.imageUrl
-      });
     }
   }, {
     key: "handleChange",
@@ -1073,8 +1072,7 @@ var mapUpdate = function mapUpdate(state) {
 
 var mapAdd = function mapAdd(state) {
   return {
-    name: 'add',
-    product: state.product
+    name: 'add'
   };
 };
 

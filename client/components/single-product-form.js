@@ -19,13 +19,13 @@ class ProductForm extends React.Component {
   componentDidMount() {
     if (this.props.name === 'update') {
       this.props.getSingleProduct(this.props.match.params.productId)
+      this.setState({
+        name: this.props.product.name,
+        description: this.props.product.description,
+        price: this.props.product.price,
+        imageUrl: this.props.product.imageUrl
+      })
     }
-    this.setState({
-      name: this.props.product.name,
-      description: this.props.product.description,
-      price: this.props.product.price,
-      imageUrl: this.props.product.imageUrl
-    })
   }
 
   handleChange(e) {
@@ -108,8 +108,7 @@ const mapUpdate = state => {
 }
 const mapAdd = state => {
   return {
-    name: 'add',
-    product: state.product
+    name: 'add'
   }
 }
 
