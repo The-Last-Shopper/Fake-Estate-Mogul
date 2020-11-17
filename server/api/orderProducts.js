@@ -6,13 +6,14 @@ router.get('/:orderId', async (req, res, next) => {
   try {
     const orderId = req.params.orderId
     let cart = await OrderProduct.findAll({
+      //DatabaseError [SequelizeDatabaseError]: invalid input syntax for type integer: "undefined" | after GET /auth/me 304 9.400 ms - -
       where: {
         orderId: orderId
       }
     })
     res.json(cart)
   } catch (error) {
-    console.log(error)
+    console.log('error getting cart: ', error)
   }
 })
 

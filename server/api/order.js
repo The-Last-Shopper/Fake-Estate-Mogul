@@ -2,7 +2,7 @@ const router = require('express').Router()
 const {isAuthorized} = require('../auth-middleware')
 const {Order, OrderProduct, Product} = require('../db/models')
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAuthorized, async (req, res, next) => {
   try {
     const [order, isCreated] = await Order.findOrCreate({
       where: {
