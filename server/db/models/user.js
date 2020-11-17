@@ -30,9 +30,6 @@ const User = db.define('user', {
   },
   billingInfo: {
     type: Sequelize.STRING
-    // validate: {
-    //   isCreditCard: true
-    // }
   },
   imageUrl: {
     type: Sequelize.STRING,

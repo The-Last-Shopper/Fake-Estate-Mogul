@@ -2,10 +2,6 @@ const faker = require('faker')
 const db = require('../server/db')
 const {User, Product, Order, OrderProduct} = require('../server/db/models')
 
-// have a well-seeded database so that I am able to simulate a number of different scenarios for the user stories below.
-// By doing this, you really set yourselves up to tackle many of the points throughout the tiers. In the long run, this will save you, potentially, tons of time.
-// For example, seed hundreds of products with dummy data so that when you get to the “pagination” user story, you won’t have to worry about adding more products.
-// Likewise, add a bunch of users with products in their carts so editing the cart can be worked on without already having the “add to cart” functionality built out.
 async function seed() {
   await db.sync({force: true})
   console.log('db synced')
@@ -17,6 +13,8 @@ async function seed() {
       name: 'Bungalow',
       description: 'It is a house',
       price: 200000,
+      type: 'Bungalow',
+      quantity: 5,
       imageUrl:
         'https://www.houseplans.net/uploads/plans/2824/elevations/40597-1200.jpg?v=0'
     }),
@@ -24,6 +22,8 @@ async function seed() {
       name: 'Apartment',
       description: 'It is an apartment',
       price: 400000,
+      type: 'Apartment',
+      quantity: 6,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQhT2U27qTQOIgLE9p8iiKKDHev2RL1OL0vjw&usqp=CAU'
     }),
@@ -31,6 +31,8 @@ async function seed() {
       name: 'Condo',
       description: 'It is a condo',
       price: 800000,
+      type: 'Condo',
+      quantity: 7,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSooE3S9WPfAjquh1_pZpazzxf4wUT9-Jl0Sg&usqp=CAU'
     }),
@@ -38,6 +40,8 @@ async function seed() {
       name: 'Penthouse',
       description: 'It is a penthouse',
       price: 1000000,
+      type: 'Penthouse',
+      quantity: 3,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSZX_9AtMR8M1z91bl-4OZBC9D2q1LM7NmyGQ&usqp=CAU'
     }),
@@ -45,11 +49,13 @@ async function seed() {
       name: 'Mansion',
       description: 'It is a mansion',
       price: 3000000,
+      type: 'Mansion',
+      quantity: 2,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS_BXA02XUyNPDLhQFF5O36FySUHjkg32lsBw&usqp=CAU'
     })
   ]
-  const ordersToCreate = []
+
   const productTypes = [
     'Bungalow',
     'Apartment',
@@ -58,7 +64,8 @@ async function seed() {
     'Mansion'
   ]
   const emailExtention = ['@hotmail.com', '@yahoo.com', '@gmail.com']
-  const ordersWithProducts = []
+  const ordersToCreate = []
+  let ordersWithProducts = []
 
   for (let i = 0; i < 35; i++) {
     const firstName = faker.name.firstName()
@@ -112,15 +119,28 @@ async function seed() {
 
   await Promise.all(ordersToCreate)
 
-  for (let i = 0; i < 300; i++) {
-    ordersWithProducts.push(
-      OrderProduct.create({
-        price: 1000,
-        quantity: Math.floor(Math.random() * 5) + 1,
-        orderId: Math.floor(Math.random() * 100) + 1,
-        productId: Math.floor(Math.random() * 255) + 1
-      })
-    )
+  for (let i = 1; i <= 100; i++) {
+    let productsInOrder = []
+    let numberOfProductsInOrder = Math.floor(Math.random() * 11)
+    while (numberOfProductsInOrder !== 0) {
+      const productId = Math.floor(Math.random() * 255) + 1
+      const product = await Product.findOne({where: {id: productId}})
+      numberOfProductsInOrder--
+      if (!productsInOrder.includes(productId)) {
+        ordersWithProducts.push(
+          OrderProduct.create({
+            price: product.price,
+            quantity: Math.floor(Math.random() * 5) + 1,
+            orderId: i,
+            productId: productId,
+            name: product.name,
+            imageUrl: product.imageUrl,
+            description: product.description
+          })
+        )
+        productsInOrder.push(productId)
+      }
+    }
   }
   await Promise.all(ordersWithProducts)
   console.log('seeded successfully')
