@@ -755,7 +755,7 @@ function (_React$Component) {
         order: this.props.order,
         total: this.findTotal()
       });
-      this.props.checkOutOrder(this.props.order.id, this.state.total).then(function () {
+      this.props.checkOutOrder(this.props.order.id, this.findTotal()).then(function () {
         return _this4.props.getOrder(_this4.props.user);
       });
     }
@@ -818,8 +818,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     editProduct: function editProduct(orderId, productId, quantity) {
       return dispatch(Object(_store_orderproduct__WEBPACK_IMPORTED_MODULE_4__["thunkEditProductFromCart"])(orderId, productId, quantity));
     },
-    checkOutOrder: function checkOutOrder(orderId) {
-      return dispatch(Object(_store_order__WEBPACK_IMPORTED_MODULE_5__["thunkCheckOut"])(orderId));
+    checkOutOrder: function checkOutOrder(orderId, totalPrice) {
+      return dispatch(Object(_store_order__WEBPACK_IMPORTED_MODULE_5__["thunkCheckOut"])(orderId, totalPrice));
     },
     getOrder: function getOrder(user) {
       return dispatch(Object(_store_order__WEBPACK_IMPORTED_MODULE_5__["thunkAddNewOrder"])(user));
@@ -1246,7 +1246,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "User Info:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.address)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Order History"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Order #"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Confirmation #"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Total Price"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, orders.length ? orders.map(function (order) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: order.id
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.confirmationNum), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Total Price"));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.confirmationNum), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.totalPrice));
       }) : null))));
     }
   }]);

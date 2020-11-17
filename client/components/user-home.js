@@ -39,7 +39,7 @@ export class UserHome extends React.Component {
                     <tr key={order.id}>
                       <td>{order.id}</td>
                       <td>{order.confirmationNum}</td>
-                      <td>Total Price</td>
+                      <td>{order.totalPrice}</td>
                     </tr>
                   ))
                 : null}

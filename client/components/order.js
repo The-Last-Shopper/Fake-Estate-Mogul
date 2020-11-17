@@ -47,7 +47,7 @@ class Order extends React.Component {
       total: this.findTotal()
     })
     this.props
-      .checkOutOrder(this.props.order.id, this.state.total)
+      .checkOutOrder(this.props.order.id, this.findTotal())
       .then(() => this.props.getOrder(this.props.user))
   }
 
@@ -106,7 +106,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(thunkRemoveProductFromCart(orderId, productId)),
   editProduct: (orderId, productId, quantity) =>
     dispatch(thunkEditProductFromCart(orderId, productId, quantity)),
-  checkOutOrder: orderId => dispatch(thunkCheckOut(orderId)),
+  checkOutOrder: (orderId, totalPrice) =>
+    dispatch(thunkCheckOut(orderId, totalPrice)),
   getOrder: user => dispatch(thunkAddNewOrder(user))
 })
 
