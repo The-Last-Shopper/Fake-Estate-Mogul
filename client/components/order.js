@@ -8,6 +8,7 @@ import {
   thunkEditProductFromCart
 } from '../store/orderproduct'
 import {thunkCheckOut, thunkAddNewOrder} from '../store/order'
+import Button from 'react-bootstrap/Button'
 
 class Order extends React.Component {
   constructor() {
@@ -47,9 +48,8 @@ class Order extends React.Component {
       total: this.findTotal()
     })
     this.props
-      .checkOutOrder(this.props.order.id)
+      .checkOutOrder(this.props.order.id, this.findTotal())
       .then(() => this.props.getOrder(this.props.user))
-    // .then(() => this.props.getCart(this.props.order.id))
   }
 
   findTotal() {
@@ -60,7 +60,6 @@ class Order extends React.Component {
   }
 
   render() {
-    const order = this.props.order
     let cart = JSON.parse(localStorage.getItem('cart')) || []
     return (
       <div className="order">
@@ -79,9 +78,9 @@ class Order extends React.Component {
           ))
         )}
         <h3>Total Amount: ${this.findTotal()}</h3>
-        <button type="button" onClick={this.checkOut}>
+        <Button variant="success" type="button" onClick={this.checkOut}>
           CheckOut
-        </button>
+        </Button>
         {this.state.isCheckedOut && (
           <Redirect
             to={{
@@ -107,7 +106,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(thunkRemoveProductFromCart(orderId, productId)),
   editProduct: (orderId, productId, quantity) =>
     dispatch(thunkEditProductFromCart(orderId, productId, quantity)),
-  checkOutOrder: orderId => dispatch(thunkCheckOut(orderId)),
+  checkOutOrder: (orderId, totalPrice) =>
+    dispatch(thunkCheckOut(orderId, totalPrice)),
   getOrder: user => dispatch(thunkAddNewOrder(user))
 })
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import {thunkFetchAllUsers} from '../store/allusers'
 import {connect} from 'react-redux'
+import {Table} from 'react-bootstrap'
 
 class UsersInfo extends React.Component {
   componentDidMount() {
@@ -13,7 +14,7 @@ class UsersInfo extends React.Component {
     return (
       <div>
         <h1>Users Information</h1>
-        <table>
+        <Table>
           <thead>
             <tr>
               <th>No.</th>
@@ -32,7 +33,7 @@ class UsersInfo extends React.Component {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
     )
   }

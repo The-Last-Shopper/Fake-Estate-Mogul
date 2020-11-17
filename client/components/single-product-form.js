@@ -19,6 +19,12 @@ class ProductForm extends React.Component {
   componentDidMount() {
     if (this.props.name === 'update') {
       this.props.getSingleProduct(this.props.match.params.productId)
+      this.setState({
+        name: this.props.product.name,
+        description: this.props.product.description,
+        price: this.props.product.price,
+        imageUrl: this.props.product.imageUrl
+      })
     }
   }
 
@@ -41,12 +47,15 @@ class ProductForm extends React.Component {
       <div>
         <form onSubmit={e => this.handleSubmit(e)}>
           <label htmlFor="name">Name</label>
+
           <input
             name="name"
             type="text"
             value={this.state.name}
             onChange={this.handleChange}
           />
+          {this.state.name ? null : <span className="warning">Required!</span>}
+
           <label htmlFor="description">Description</label>
           <input
             name="description"
@@ -54,6 +63,10 @@ class ProductForm extends React.Component {
             value={this.state.description}
             onChange={this.handleChange}
           />
+          {this.state.description ? null : (
+            <span className="warning">Required!</span>
+          )}
+
           <label htmlFor="price">Price</label>
           <input
             name="price"
@@ -63,6 +76,8 @@ class ProductForm extends React.Component {
             value={this.state.price}
             onChange={this.handleChange}
           />
+          {this.state.price ? null : <span className="warning">Required!</span>}
+
           <label htmlFor="imageUrl">Image URL</label>
           <input
             name="imageUrl"
@@ -70,10 +85,15 @@ class ProductForm extends React.Component {
             value={this.state.imageUrl}
             onChange={this.handleChange}
           />
-          <button type="button" onClick={this.props.history.goBack}>
-            Back
-          </button>
-
+          {this.state.imageUrl ? null : (
+            <span className="warning">Required!</span>
+          )}
+          <br />
+          <div>
+            <button type="button" onClick={this.props.history.goBack}>
+              Back
+            </button>
+          </div>
           <button type="submit">Submit</button>
         </form>
       </div>
