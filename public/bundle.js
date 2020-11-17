@@ -1073,7 +1073,8 @@ var mapUpdate = function mapUpdate(state) {
 
 var mapAdd = function mapAdd(state) {
   return {
-    name: 'add'
+    name: 'add',
+    product: state.product
   };
 };
 
@@ -1776,7 +1777,9 @@ var initialState = {
       });
 
     case ADD_NEW_PRODUCT:
-      return [].concat(_toConsumableArray(state), [action.newProduct]);
+      return _objectSpread({}, state, {
+        products: [].concat(_toConsumableArray(state.products), [action.newProduct])
+      });
 
     default:
       return state;

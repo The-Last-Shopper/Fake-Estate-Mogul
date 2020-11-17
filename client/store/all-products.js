@@ -48,7 +48,7 @@ export default (state = initialState, action) => {
     case GET_ALL_PRODUCTS:
       return {...state, loading: false, products: action.products}
     case ADD_NEW_PRODUCT:
-      return [...state, action.newProduct]
+      return {...state, products: [...state.products, action.newProduct]}
     default:
       return state
   }

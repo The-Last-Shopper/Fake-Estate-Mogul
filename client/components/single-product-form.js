@@ -108,7 +108,8 @@ const mapUpdate = state => {
 }
 const mapAdd = state => {
   return {
-    name: 'add'
+    name: 'add',
+    product: state.product
   }
 }
 
