@@ -47,17 +47,20 @@ class AllProducts extends React.Component {
             </Button>
           </Link>
         )}
-        <h2>All Products</h2>
-        {this.props.products.map(product => {
-          return (
-            <ProductCard
-              key={product.id}
-              product={product}
-              order={this.props.order}
-              handleClick={this.handleClick}
-            />
-          )
-        })}
+
+        <h2 className="center-color">All Products</h2>
+        <div className="container">
+          {this.props.products.map(product => {
+            return (
+              <ProductCard
+                key={product.id}
+                product={product}
+                order={this.props.order}
+                handleClick={this.handleClick}
+              />
+            )
+          })}
+        </div>
       </div>
     )
   }

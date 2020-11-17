@@ -57,6 +57,7 @@ async function seed() {
       imageUrl: faker.internet.avatar()
     })
   ]
+
   let usersWithExistingCarts = []
   const productsToCreate = [
     Product.create({
@@ -161,8 +162,10 @@ async function seed() {
     ordersToCreate.push(
       Order.create({
         userId: i % 10 === 0 ? null : randomUserID,
-        isCheckedOut: !!usersWithExistingCarts.includes(randomUserID),
-        confirmationNum: `${Math.floor(Math.random() * 10) + 1}`
+        isCheckedOut: usersWithExistingCarts.includes(randomUserID),
+        confirmationNum: `${Math.floor(Math.random() * 10000)}-${Math.floor(
+          Math.random() * 100000
+        )}`
       })
     )
     usersWithExistingCarts.push(randomUserID)
