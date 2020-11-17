@@ -12,7 +12,11 @@ import Loader from 'react-loader-spinner'
 class AllProducts extends React.Component {
   constructor() {
     super()
+    this.state = {
+      quantity: 1
+    }
     this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
     this.props.fetchProducts()
@@ -23,11 +27,16 @@ class AllProducts extends React.Component {
   notify() {
     toast('Added to Cart!')
   }
+
   handleClick(order, product) {
     this.props
-      .addProductToOrder(order, product)
+      .addProductToOrder(order, product, this.state.quantity)
       .then(() => this.persistentData())
     this.notify()
+  }
+
+  handleChange(e) {
+    this.setState({quantity: e.target.value})
   }
 
   persistentData() {
@@ -54,7 +63,10 @@ class AllProducts extends React.Component {
               key={product.id}
               product={product}
               order={this.props.order}
+              cart={this.props.cart}
+              quantity={this.state.quantity}
               handleClick={this.handleClick}
+              handleChange={this.handleChange}
             />
           )
         })}
@@ -77,8 +89,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchProducts: () => dispatch(fetchAllProducts()),
-    addProductToOrder: (order, product) =>
-      dispatch(thunkAddProductToCart(order, product)),
+    addProductToOrder: (order, product, quantity) =>
+      dispatch(thunkAddProductToCart(order, product, quantity)),
     loadOrder: user => dispatch(thunkAddNewOrder(user)),
     getCart: orderId => dispatch(fetchCart(orderId))
   }

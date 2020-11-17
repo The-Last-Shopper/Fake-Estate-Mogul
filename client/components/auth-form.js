@@ -35,6 +35,12 @@ const AuthForm = props => {
                 </label>
                 <input name="address" type="text" />
               </div>
+              <div>
+                <label htmlFor="imageUrl">
+                  <small>Image</small>
+                </label>
+                <input name="imageUrl" type="text" />
+              </div>
             </React.Fragment>
           )}
           <br />
