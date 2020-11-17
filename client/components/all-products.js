@@ -5,11 +5,18 @@ import {fetchAllProducts} from '../store/all-products'
 import {fetchCart, thunkAddProductToCart} from '../store/orderproduct'
 import {thunkAddNewOrder} from '../store/order'
 import {Link} from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
+import {toast} from 'react-toastify'
+import Loader from 'react-loader-spinner'
 
 class AllProducts extends React.Component {
   constructor() {
     super()
+    this.state = {
+      quantity: 1
+    }
     this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
     this.props.fetchProducts()
@@ -17,42 +24,52 @@ class AllProducts extends React.Component {
       .loadOrder(this.props.user)
       .then(() => this.props.getCart(this.props.order.id))
   }
+  notify() {
+    toast('Added to Cart!')
+  }
 
   handleClick(order, product) {
     this.props
-      .addProductToOrder(order, product)
+      .addProductToOrder(order, product, this.state.quantity)
       .then(() => this.persistentData())
+    this.notify()
+  }
+
+  handleChange(e) {
+    this.setState({quantity: e.target.value})
   }
 
   persistentData() {
     const cart = this.props.cart
-    sessionStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem('cart', JSON.stringify(cart))
   }
 
   render() {
-    console.log(this.props.user)
+    if (this.props.loading)
+      return <Loader type="TailSpin" color="Cyan" height={500} width={500} />
     return (
       <div className="all-products">
         {this.props.isAdmin && (
           <Link to="/products/add">
-            <button type="button">Add Product</button>
+            <Button variant="outline-primary" type="button">
+              Add Product
+            </Button>
           </Link>
         )}
         <h2>All Products</h2>
-        {this.props.products.length ? (
-          this.props.products.map(product => {
-            return (
-              <ProductCard
-                key={product.id}
-                product={product}
-                order={this.props.order}
-                handleClick={this.handleClick}
-              />
-            )
-          })
-        ) : (
-          <h1>Sorry! All Properties are sold out!</h1>
-        )}
+        {this.props.products.map(product => {
+          return (
+            <ProductCard
+              key={product.id}
+              product={product}
+              order={this.props.order}
+              cart={this.props.cart}
+              quantity={this.state.quantity}
+              handleClick={this.handleClick}
+              handleChange={this.handleChange}
+            />
+          )
+        })}
       </div>
     )
   }
@@ -61,18 +78,19 @@ class AllProducts extends React.Component {
 const mapStateToProps = state => {
   return {
     isAdmin: state.user.isAdmin,
-    products: state.products,
+    products: state.products.products,
     order: state.order,
     user: state.user,
-    cart: state.cart
+    cart: state.cart,
+    loading: state.products.loading
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchProducts: () => dispatch(fetchAllProducts()),
-    addProductToOrder: (order, product) =>
-      dispatch(thunkAddProductToCart(order, product)),
+    addProductToOrder: (order, product, quantity) =>
+      dispatch(thunkAddProductToCart(order, product, quantity)),
     loadOrder: user => dispatch(thunkAddNewOrder(user)),
     getCart: orderId => dispatch(fetchCart(orderId))
   }

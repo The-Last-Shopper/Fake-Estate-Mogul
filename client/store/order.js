@@ -14,8 +14,6 @@ const checkOutOrder = order => ({
   type: CHECKOUT_ORDER,
   order
 })
-// GetOrdersThunk - Fetch existing cart from user session store
-// takes in a userId, uses its cookie to grab cart
 
 export const thunkAddNewOrder = user => {
   return async dispatch => {
@@ -24,7 +22,21 @@ export const thunkAddNewOrder = user => {
       if (!user.id) {
         userId = null
       }
-      const newOrder = await axios.post('/api/order', {userId: userId})
+      let randomNum = '',
+        charset = '0123456789',
+        i = 0
+      while (i < 10) {
+        if (i === 4) randomNum += '-'
+        else
+          randomNum += charset.charAt(
+            Math.floor(Math.random() * charset.length)
+          )
+        i++
+      }
+      const newOrder = await axios.post('/api/order', {
+        userId: userId,
+        confirmationNum: randomNum
+      })
       dispatch(addNewOrder(newOrder.data))
     } catch (error) {
       console.error('unable to post new Order')
@@ -32,10 +44,12 @@ export const thunkAddNewOrder = user => {
   }
 }
 
-export const thunkCheckOut = orderId => {
+export const thunkCheckOut = (orderId, totalPrice) => {
   return async dispatch => {
     try {
-      const checkedOutOrder = await axios.put(`/api/order/${orderId}`)
+      const {data: checkedOutOrder} = await axios.put(`/api/order/${orderId}`, {
+        totalPrice: totalPrice
+      })
       dispatch(checkOutOrder(checkedOutOrder))
     } catch (error) {
       console.error(error)
