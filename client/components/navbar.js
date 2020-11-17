@@ -17,7 +17,8 @@ const NavigationBar = ({handleClick, isLoggedIn, isAdmin}) => (
             <Link to="/">Home</Link>
             <Link to="/products">All Products</Link>
             <Link to="/cart">Your Cart</Link>
-            {isAdmin ? <Link to="/users">Users Info</Link> : null}
+            {isAdmin && <Link to="/users">Users Info</Link>}
+            {isAdmin && <Link to="/adminDashboard">Dashboard</Link>}
             <a href="#" onClick={handleClick}>
               Logout
             </a>
@@ -27,8 +28,8 @@ const NavigationBar = ({handleClick, isLoggedIn, isAdmin}) => (
             {/* The navbar will show these links before you log in */}
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
-            <Link to="/cart">Your Cart</Link>
             <Link to="/products">All Products</Link>
+            <Link to="/cart">Your Cart</Link>
           </div>
         )}
       </nav>

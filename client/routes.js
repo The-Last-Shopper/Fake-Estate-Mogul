@@ -16,6 +16,7 @@ import {
 import {me} from './store'
 import {thunkAddNewOrder} from './store/order'
 import CheckOut from './components/checkout'
+import AdminDashboard from './components/admin-dashboard'
 
 /**
  * COMPONENT
@@ -51,6 +52,7 @@ class Routes extends Component {
               component={EditProduct}
             />
             <Route exact path="/checkout" component={CheckOut} />
+            <Route exact path="/adminDashboard" component={AdminDashboard} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
