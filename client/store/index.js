@@ -6,7 +6,7 @@ import user from './user'
 import allProductsReducer from './all-products'
 import singleProductReducer from './single-product'
 import orderReducer from './order'
-import cartReducer from './orderproduct'
+import cartReducer from './cart'
 import allUsersReducer from './allusers'
 import userOrders from './order-history'
 
