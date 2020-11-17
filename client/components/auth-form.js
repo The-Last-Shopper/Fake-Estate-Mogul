@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {FormGroup, FormText, Button} from 'react-bootstrap'
 
 /**
  * COMPONENT
@@ -12,38 +13,47 @@ const AuthForm = props => {
   return (
     <div>
       <form onSubmit={e => handleSubmit(e, name)} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="email" />
+        <div className="border">
+          <FormGroup controlId="formBasicEmail">
+            <label htmlFor="email">
+              <small>Email</small>
+            </label>
+            <input name="email" type="email" />
+          </FormGroup>
+          {name === 'signup' && (
+            <React.Fragment>
+              <div>
+                <label htmlFor="name">
+                  <small>Name</small>
+                </label>
+                <input name="name" type="text" />
+              </div>
+              <br />
+              <div>
+                <label htmlFor="address">
+                  <small>Address</small>
+                </label>
+                <input name="address" type="text" />
+              </div>
+            </React.Fragment>
+          )}
+          <br />
+          <FormGroup controlId="formBasicPassword">
+            <label htmlFor="password">
+              <small>Password</small>
+            </label>
+            <input name="password" type="password" />
+            <FormText className="text-muted">
+              We'll never share your password with anyone else.
+            </FormText>
+          </FormGroup>
         </div>
-        {name === 'signup' && (
-          <React.Fragment>
-            <div>
-              <label htmlFor="name">
-                <small>Name</small>
-              </label>
-              <input name="name" type="text" />
-            </div>
-            <br />
-            <div>
-              <label htmlFor="address">
-                <small>Address</small>
-              </label>
-              <input name="address" type="text" />
-            </div>
-          </React.Fragment>
-        )}
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
+
         <br />
         <div>
-          <button type="submit">{displayName}</button>
+          <Button variant="primary" type="submit">
+            {displayName}
+          </Button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>

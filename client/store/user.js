@@ -4,6 +4,7 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
+
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 
@@ -39,7 +40,6 @@ export const auth = (userInfo, method) => async dispatch => {
   }
 
   try {
-    console.log(res)
     dispatch(getUser(res.data))
     history.push('/')
   } catch (dispatchOrHistoryErr) {

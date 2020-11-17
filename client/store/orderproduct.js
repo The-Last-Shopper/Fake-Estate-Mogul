@@ -42,11 +42,10 @@ export const fetchCart = orderId => {
 export const thunkAddProductToCart = (order, product) => {
   return async dispatch => {
     try {
-      console.log(typeof product.price)
       const orderProduct = {
         name: product.name,
         price: product.price,
-        quantity: 1, ////---->>>> TAKE VALUE FROM UI
+        quantity: 1,
         orderId: order.id,
         productId: product.id,
         imageUrl: product.imageUrl,
