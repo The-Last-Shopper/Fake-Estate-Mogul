@@ -4,6 +4,7 @@ import {fetchCart, thunkAddProductToCart} from '../store/cart'
 import {Link} from 'react-router-dom'
 import {deleteProduct, fetchSingleProduct} from '../store/single-product'
 import {toast} from 'react-toastify'
+import {Button} from 'react-bootstrap'
 
 class SingleProduct extends React.Component {
   constructor() {
@@ -48,8 +49,7 @@ class SingleProduct extends React.Component {
   }
 
   handleDelete() {
-    console.log('button was clicked')
-    this.props.deleteProduct(this.props.product.id, this.props.history)
+    this.props.deleteProduct(this.props.product.id, this.props.history, '/')
   }
 
   persistentData() {
@@ -60,7 +60,7 @@ class SingleProduct extends React.Component {
   render() {
     const product = this.props.product
     return (
-      <div>
+      <div className="single-product">
         <h1>Name: {product.name}</h1>
         <img src={product.imageUrl} />
         <p>Price: {product.price} </p>
@@ -75,22 +75,22 @@ class SingleProduct extends React.Component {
             value={this.state.quantity}
             onChange={this.handleChange}
           />
-          <button
+          <Button
             onClick={() => this.handleClick(this.props.order, product)}
             type="button"
             disabled={this.state.inCart}
           >
             Add To Cart
-          </button>
+          </Button>
         </form>
         {this.props.isAdmin && (
           <div className="admin-buttons">
             <Link to={`/products/${product.id}/edit`}>
               <button type="button">Edit</button>
             </Link>
-            <button type="button" onClick={this.handleDelete}>
+            <Button type="button" onClick={this.handleDelete}>
               Delete
-            </button>
+            </Button>
           </div>
         )}
       </div>
@@ -112,8 +112,8 @@ const mapDispatchToProps = dispatch => {
     getSingleProduct: productId => dispatch(fetchSingleProduct(productId)),
     addProductToCart: (order, product, quantity, userId) =>
       dispatch(thunkAddProductToCart(order, product, quantity, userId)),
-    deleteProduct: (productId, history) =>
-      dispatch(deleteProduct(productId, history)),
+    deleteProduct: (productId, history, redirectTo) =>
+      dispatch(deleteProduct(productId, history, redirectTo)),
     getCart: orderId => dispatch(fetchCart(orderId))
   }
 }

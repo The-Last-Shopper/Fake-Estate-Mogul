@@ -34,7 +34,6 @@ router.post('/', isAuthorized, async (req, res, next) => {
 
 // Checkout Cart
 router.put('/:orderId', isAuthorized, async (req, res, next) => {
-  //might have to send userId through body or find order by UserId association
   try {
     const updateCheckOut = await Order.findByPk(req.params.orderId)
     await updateCheckOut.update({

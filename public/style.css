@@ -1,9 +1,22 @@
 body {
   font-family: sans-serif;
+  background: url('https://cdn.hipwallpaper.com/i/27/49/GfZ1ap.jpg') no-repeat
+    center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 a {
   text-decoration: none;
+}
+
+img {
+  float: left;
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
 }
 
 label {
@@ -43,7 +56,8 @@ form div {
   text-decoration: underline;
 }
 
-.all-products {
+.all-products,
+.order {
   background: url('Websit\ Image.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -54,4 +68,25 @@ form div {
 .user-info {
   text-decoration: underline;
   font-weight: bold;
+}
+
+.user-home {
+  height: 50rem;
+  background: url('https://i.pinimg.com/originals/bc/71/57/bc7157954f158dec66c8ee98c1313f02.jpg')
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.order-header,
+.order,
+.user-home,
+.single-product,
+.all-products,
+.admin-dashboard,
+.user-info {
+  margin: auto;
+  text-align: center;
 }
