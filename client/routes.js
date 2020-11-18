@@ -57,7 +57,7 @@ class Routes extends Component {
         )}
         {/* Displays our Login component as a fallback */}
         <Route exact path="/">
-          <Redirect to="/" />
+          <Redirect to="/login" />
         </Route>
         <Route exact path="/products" component={AllProducts} />
         <Route exact path="/products/:productId" component={SingleProduct} />
