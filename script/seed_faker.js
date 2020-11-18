@@ -152,6 +152,7 @@ async function seed() {
         type: productType
       })
     )
+    productsToCreate.sort()
   }
 
   await Promise.all(usersToCreate)
@@ -165,7 +166,8 @@ async function seed() {
         isCheckedOut: usersWithExistingCarts.includes(randomUserID),
         confirmationNum: `${Math.floor(Math.random() * 10000)}-${Math.floor(
           Math.random() * 100000
-        )}`
+        )}`,
+        totalPrice: 0
       })
     )
     usersWithExistingCarts.push(randomUserID)
@@ -175,12 +177,15 @@ async function seed() {
 
   for (let i = 1; i <= 100; i++) {
     let productsInOrder = []
-    let numberOfProductsInOrder = Math.floor(Math.random() * 11)
+    let totalPriceOfOrder = 0
+    let numberOfProductsInOrder = Math.floor(Math.random() * 10) + 1
+    let order = await Order.findOne({where: {id: i}})
     while (numberOfProductsInOrder !== 0) {
       const productId = Math.floor(Math.random() * 255) + 1
       const product = await Product.findOne({where: {id: productId}})
       numberOfProductsInOrder--
       if (!productsInOrder.includes(productId)) {
+        totalPriceOfOrder = totalPriceOfOrder + product.price
         ordersWithProducts.push(
           OrderProduct.create({
             price: product.price,
@@ -195,7 +200,11 @@ async function seed() {
         productsInOrder.push(productId)
       }
     }
+    if (order.isCheckedOut) {
+      await Order.update({totalPrice: totalPriceOfOrder}, {where: {id: i}})
+    }
   }
+
   await Promise.all(ordersWithProducts)
   console.log('seeded successfully')
 }
