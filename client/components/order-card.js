@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Card, Button} from 'react-bootstrap'
 
 class OrderCard extends React.Component {
   constructor(props) {
@@ -32,27 +33,34 @@ class OrderCard extends React.Component {
   render() {
     const product = this.props.product
     return (
-      <div className="cart-item">
-        <h4>Name: {product.name}</h4>
-        <img src={product.imageUrl} />
-        <p>{product.description}</p>
+      <div className="col-sm-4">
+        <Card border="primary" style={{width: '18rem'}}>
+          <div className="cart-item">
+            <h4 className="card-title">{product.name}</h4>
+            <img src={product.imageUrl} />
+            <p>{product.description}</p>
 
-        <p>Price: ${product.price} </p>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="quantity">Quantity: {product.quantity}</label>
-          <input
-            name="quantity"
-            type="number"
-            min="1"
-            step="1"
-            value={this.state.quantity}
-            onChange={this.handleChange}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <button type="button" onClick={() => this.props.removeProduct(product)}>
-          Remove from cart
-        </button>
+            <p>Price: ${product.price} </p>
+            <form onSubmit={this.handleSubmit}>
+              <label htmlFor="quantity">Quantity: {product.quantity}</label>
+              <input
+                name="quantity"
+                type="number"
+                min="1"
+                step="1"
+                value={this.state.quantity}
+                onChange={this.handleChange}
+              />
+              <Button type="submit">Submit</Button>
+            </form>
+            <Button
+              type="button"
+              onClick={() => this.props.removeProduct(product)}
+            >
+              Remove from cart
+            </Button>
+          </div>
+        </Card>
       </div>
     )
   }

@@ -11,9 +11,9 @@ class UsersInfo extends React.Component {
   render() {
     const users = this.props.users || []
     return (
-      <div>
+      <div className="user-info">
         <h1>Users Information</h1>
-        <Table>
+        <Table striped bordered hover variant="dark">
           <thead>
             <tr>
               <th>No.</th>

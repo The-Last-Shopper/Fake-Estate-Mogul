@@ -68,23 +68,23 @@ class Order extends React.Component {
     return (
       <div className="order">
         <h1>Your Cart</h1>
-        {!cart.length ? (
-          <h3>Your Cart is empty!</h3>
-        ) : (
-          cart.map((product, index) => (
-            <OrderCard
-              product={product}
-              key={index}
-              removeProduct={this.removeProduct}
-              editProduct={this.props.editProduct}
-              persistentData={this.persistentData}
-            />
-          ))
-        )}
         <h3>Total Amount: ${this.findTotal()}</h3>
+        {!cart.length && <h3 className="center">Your Cart is empty!</h3>}
         <Button variant="success" type="button" onClick={this.checkOut}>
           Check Out
         </Button>
+        <div className="container">
+          {cart.length &&
+            cart.map((product, index) => (
+              <OrderCard
+                product={product}
+                key={index}
+                removeProduct={this.removeProduct}
+                editProduct={this.props.editProduct}
+                persistentData={this.persistentData}
+              />
+            ))}
+        </div>
         {this.state.isCheckedOut && (
           <Redirect
             to={{
@@ -112,7 +112,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(thunkEditProductFromCart(orderId, productId, quantity, userId)),
   checkOutOrder: (orderId, totalPrice, userId) =>
     dispatch(thunkCheckOut(orderId, totalPrice, userId)),
-  getOrder: user => dispatch(thunkAddNewOrder(user))
+  getOrder: user => dispatch(fetchOrder(user))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Order)
