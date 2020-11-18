@@ -12,9 +12,6 @@ import Loader from 'react-loader-spinner'
 class AllProducts extends React.Component {
   constructor() {
     super()
-    this.state = {
-      quantity: 1
-    }
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -28,14 +25,9 @@ class AllProducts extends React.Component {
     toast('Added to Cart!')
   }
 
-  handleClick(order, product) {
+  handleClick(order, product, quantity) {
     this.props
-      .addProductToOrder(
-        order,
-        product,
-        this.state.quantity,
-        this.props.user.id
-      )
+      .addProductToOrder(order, product, quantity, this.props.user.id)
       .then(() => this.persistentData())
     this.notify()
   }
@@ -71,9 +63,7 @@ class AllProducts extends React.Component {
                 product={product}
                 order={this.props.order}
                 cart={this.props.cart}
-                quantity={this.state.quantity}
                 handleClick={this.handleClick}
-                // handleChange={this.handleChange}
               />
             )
           })}

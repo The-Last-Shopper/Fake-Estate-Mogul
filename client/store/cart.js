@@ -5,6 +5,7 @@ const GET_CART = 'GET_CART'
 const ADD_PRODUCT_TO_CART = 'ADD_PRODUCT_TO_CART'
 const REMOVE_PRODUCT_FROM_CART = 'REMOVE_PRODUCT_FROM_CART'
 const EDIT_PRODUCT_FROM_CART = 'EDIT_PRODUCT_FROM_CART'
+const CLEAR_CART = 'CLEAR_CART'
 
 // ACTION CREATOR //
 const getCart = cart => ({
@@ -26,6 +27,10 @@ const editProductFromCart = (product, productId) => ({
   type: EDIT_PRODUCT_FROM_CART,
   product,
   productId
+})
+
+export const clearCart = () => ({
+  type: CLEAR_CART
 })
 
 // THUNK //
@@ -106,6 +111,8 @@ export default (state = [], action) => {
           return product
         }
       })
+    case CLEAR_CART:
+      return []
     default:
       return state
   }

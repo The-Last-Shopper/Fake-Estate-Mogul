@@ -5,7 +5,8 @@ import OrderCard from './order-card'
 import {
   fetchCart,
   thunkRemoveProductFromCart,
-  thunkEditProductFromCart
+  thunkEditProductFromCart,
+  clearCart
 } from '../store/cart'
 import {thunkCheckOut, fetchOrder} from '../store/order'
 import Button from 'react-bootstrap/Button'
@@ -54,6 +55,8 @@ class Order extends React.Component {
     this.props
       .checkOutOrder(this.props.order.id, this.findTotal(), this.props.user.id)
       .then(() => this.props.getOrder(this.props.user))
+      .then(() => this.props.clearCart())
+      .then(() => this.persistentData())
   }
 
   findTotal() {
@@ -112,7 +115,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(thunkEditProductFromCart(orderId, productId, quantity, userId)),
   checkOutOrder: (orderId, totalPrice, userId) =>
     dispatch(thunkCheckOut(orderId, totalPrice, userId)),
-  getOrder: user => dispatch(fetchOrder(user))
+  getOrder: user => dispatch(fetchOrder(user)),
+  clearCart: () => dispatch(clearCart())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Order)
