@@ -58,8 +58,7 @@ form div {
   font-weight: bold;
 }
 
-.all-products,
-.order {
+.all-products {
   background: url('skyline\ doha.webp') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;

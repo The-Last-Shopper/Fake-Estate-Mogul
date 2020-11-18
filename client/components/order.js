@@ -69,13 +69,12 @@ class Order extends React.Component {
       <div className="order">
         <h1>Your Cart</h1>
         <h3>Total Amount: ${this.findTotal()}</h3>
+        {!cart.length && <h3 className="center">Your Cart is empty!</h3>}
         <Button variant="success" type="button" onClick={this.checkOut}>
           Check Out
         </Button>
         <div className="container">
-          {!cart.length ? (
-            <h3>Your Cart is empty!</h3>
-          ) : (
+          {cart.length &&
             cart.map((product, index) => (
               <OrderCard
                 product={product}
@@ -84,8 +83,7 @@ class Order extends React.Component {
                 editProduct={this.props.editProduct}
                 persistentData={this.persistentData}
               />
-            ))
-          )}
+            ))}
         </div>
         {this.state.isCheckedOut && (
           <Redirect
