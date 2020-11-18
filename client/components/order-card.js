@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Card} from 'react-bootstrap'
+import {Card, Button} from 'react-bootstrap'
 
 class OrderCard extends React.Component {
   constructor(props) {
@@ -51,14 +51,14 @@ class OrderCard extends React.Component {
                 value={this.state.quantity}
                 onChange={this.handleChange}
               />
-              <button type="submit">Submit</button>
+              <Button type="submit">Submit</Button>
             </form>
-            <button
+            <Button
               type="button"
               onClick={() => this.props.removeProduct(product)}
             >
               Remove from cart
-            </button>
+            </Button>
           </div>
         </Card>
       </div>

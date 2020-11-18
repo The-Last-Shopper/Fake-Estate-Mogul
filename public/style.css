@@ -1,6 +1,13 @@
-/* body {
-
-} */
+body {
+  font-family: sans-serif;
+  background: url('./Login\ page.webp') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  font-weight: 900;
+}
 
 a {
   text-decoration: none;
@@ -107,7 +114,7 @@ form div {
   color: red;
 }
 
-.loginSignUp {
+/* .loginSignUp {
   font-family: sans-serif;
   background: url('./Login\ page.webp') no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -115,4 +122,15 @@ form div {
   -o-background-size: cover;
   background-size: cover;
   height: 100%;
+} */
+
+.single-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 5px solid darkblue;
+  margin: 10%;
+  padding: 10%;
+  font-size: large;
+  font-weight: 900;
 }

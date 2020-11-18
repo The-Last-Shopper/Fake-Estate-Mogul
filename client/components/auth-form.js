@@ -56,7 +56,7 @@ const AuthForm = props => {
                 <p>Password</p>
               </label>
               <input className="center" name="password" type="password" />
-              <FormText className="text-muted">
+              <FormText className="bold">
                 We'll never share your password with anyone else.
               </FormText>
             </FormGroup>

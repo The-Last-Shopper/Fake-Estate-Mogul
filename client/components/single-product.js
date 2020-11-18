@@ -4,7 +4,7 @@ import {fetchCart, thunkAddProductToCart} from '../store/cart'
 import {Link} from 'react-router-dom'
 import {deleteProduct, fetchSingleProduct} from '../store/single-product'
 import {toast} from 'react-toastify'
-import {Button} from 'react-bootstrap'
+import {Button, Card} from 'react-bootstrap'
 
 class SingleProduct extends React.Component {
   constructor() {
@@ -62,37 +62,39 @@ class SingleProduct extends React.Component {
     return (
       <div className="single-product">
         <h1>Name: {product.name}</h1>
-        <img src={product.imageUrl} />
-        <p>Price: {product.price} </p>
-        <p>Description: {product.description}</p>
-        <form>
-          <label htmlFor="quantity">Quantity: </label>
-          <input
-            name="quantity"
-            type="number"
-            min="1"
-            step="1"
-            value={this.state.quantity}
-            onChange={this.handleChange}
-          />
-          <Button
-            onClick={() => this.handleClick(this.props.order, product)}
-            type="button"
-            disabled={this.state.inCart}
-          >
-            Add To Cart
-          </Button>
-        </form>
-        {this.props.isAdmin && (
-          <div className="admin-buttons">
-            <Link to={`/products/${product.id}/edit`}>
-              <button type="button">Edit</button>
-            </Link>
-            <Button type="button" onClick={this.handleDelete}>
-              Delete
+        <div className="single-container">
+          <img src={product.imageUrl} />
+          <p>Price: {product.price} </p>
+          <p>Description: {product.description}</p>
+          <form>
+            <label htmlFor="quantity">Quantity: </label>
+            <input
+              name="quantity"
+              type="number"
+              min="1"
+              step="1"
+              value={this.state.quantity}
+              onChange={this.handleChange}
+            />
+            <Button
+              onClick={() => this.handleClick(this.props.order, product)}
+              type="button"
+              disabled={this.state.inCart}
+            >
+              Add To Cart
             </Button>
-          </div>
-        )}
+          </form>
+          {this.props.isAdmin && (
+            <div className="admin-buttons">
+              <Link to={`/products/${product.id}/edit`}>
+                <Button type="button">Edit</Button>
+              </Link>
+              <Button type="button" onClick={this.handleDelete}>
+                Delete
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     )
   }

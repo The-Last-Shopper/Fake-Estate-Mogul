@@ -2,11 +2,22 @@ import React from 'react'
 import axios from 'axios'
 import StripeCheckout from 'react-stripe-checkout'
 
+const successPayment = data => {
+  alert('Payment Successful')
+}
+
+const errorPayment = data => {
+  alert('Payment Error')
+}
+
 const onToken = amount => token =>
-  axios.post('/checkout', {
-    amount,
-    token
-  })
+  axios
+    .post('/checkout', {
+      amount,
+      token
+    })
+    .then(successPayment)
+    .catch(errorPayment)
 
 const Checkout = ({amount}) => (
   <StripeCheckout
