@@ -43,7 +43,7 @@ class AdminDashboard extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="admin-dashboard">
         <h2>Welcome, Admin!</h2>
         <div>
           <Button name="showProducts" onClick={this.toggleState}>

@@ -72,22 +72,21 @@ class Order extends React.Component {
         <Button variant="success" type="button" onClick={this.checkOut}>
           Check Out
         </Button>
-        {!cart.length ? (
-          <h3>Your Cart is empty!</h3>
-        ) : (
-          cart.map((product, index) => (
-            <OrderCard
-              product={product}
-              key={index}
-              removeProduct={this.removeProduct}
-              editProduct={this.props.editProduct}
-              persistentData={this.persistentData}
-            />
-          ))
-        )}
-        {/* <Button variant="success" type="button" onClick={this.checkOut}>
-          Check Out
-        </Button> */}
+        <div className="container">
+          {!cart.length ? (
+            <h3>Your Cart is empty!</h3>
+          ) : (
+            cart.map((product, index) => (
+              <OrderCard
+                product={product}
+                key={index}
+                removeProduct={this.removeProduct}
+                editProduct={this.props.editProduct}
+                persistentData={this.persistentData}
+              />
+            ))
+          )}
+        </div>
         {this.state.isCheckedOut && (
           <Redirect
             to={{
