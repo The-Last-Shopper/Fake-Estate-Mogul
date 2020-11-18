@@ -17,7 +17,7 @@ router.get('/:userId', async (req, res, next) => {
 })
 
 // Find existing or Create new Order
-router.post('/', async (req, res, next) => {
+router.post('/', isAuthorized, async (req, res, next) => {
   try {
     const [order, isCreated] = await Order.findOrCreate({
       where: {
@@ -33,7 +33,7 @@ router.post('/', async (req, res, next) => {
 })
 
 // Checkout Cart
-router.put('/:orderId', async (req, res, next) => {
+router.put('/:orderId', isAuthorized, async (req, res, next) => {
   //might have to send userId through body or find order by UserId association
   try {
     const updateCheckOut = await Order.findByPk(req.params.orderId)
