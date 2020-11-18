@@ -62,31 +62,39 @@ class UserHome extends React.Component {
             <h4 className="user-info">User Info</h4>
           </div>
           <img src={user.imageUrl} />
-
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
-          <p>Address: {user.address}</p>
-          <Button type="button" onClick={this.toggleInput}>
-            Edit User Info
-          </Button>
+          <br />
+          <div>
+            <p>Name: {user.name}</p>
+            <p>Email: {user.email}</p>
+            <p>Address: {user.address}</p>
+            <Button type="button" onClick={this.toggleInput}>
+              Edit User Info
+            </Button>
+          </div>
         </div>
         {this.state.toggling && (
           <form onSubmit={e => this.handleSubmit(e)}>
-            <label htmlFor="name">Name</label>
+            <label className="thickfont" htmlFor="name">
+              Name
+            </label>
             <input
               name="name"
               type="text"
               value={this.state.name}
               onChange={this.handleChange}
             />
-            <label htmlFor="email">Email</label>
+            <label className="thickfont" htmlFor="email">
+              Email
+            </label>
             <input
               name="email"
               type="text"
               value={this.state.email}
               onChange={this.handleChange}
             />
-            <label htmlFor="address">Address</label>
+            <label className="thickfont" htmlFor="address">
+              Address
+            </label>
             <input
               name="address"
               type="text"

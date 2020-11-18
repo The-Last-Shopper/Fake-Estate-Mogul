@@ -133,3 +133,7 @@ form div {
   font-size: large;
   font-weight: 900;
 }
+
+.thickfont {
+  color: green;
+}
