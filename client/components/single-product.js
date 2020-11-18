@@ -48,8 +48,7 @@ class SingleProduct extends React.Component {
   }
 
   handleDelete() {
-    console.log('button was clicked')
-    this.props.deleteProduct(this.props.product.id, this.props.history)
+    this.props.deleteProduct(this.props.product.id, this.props.history, '/')
   }
 
   persistentData() {
@@ -112,8 +111,8 @@ const mapDispatchToProps = dispatch => {
     getSingleProduct: productId => dispatch(fetchSingleProduct(productId)),
     addProductToCart: (order, product, quantity, userId) =>
       dispatch(thunkAddProductToCart(order, product, quantity, userId)),
-    deleteProduct: (productId, history) =>
-      dispatch(deleteProduct(productId, history)),
+    deleteProduct: (productId, history, redirectTo) =>
+      dispatch(deleteProduct(productId, history, redirectTo)),
     getCart: orderId => dispatch(fetchCart(orderId))
   }
 }

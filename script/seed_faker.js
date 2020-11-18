@@ -139,11 +139,11 @@ async function seed() {
   for (let i = 0; i < 250; i++) {
     const productType = productTypes[Math.floor(Math.random() * 5)]
     const yearBuild = Math.floor(Math.random() * 121) + 1900
-    const productDescription = `This ${productType} was build in ${yearBuild}. It is located at ${faker.address.streetAddress()}, ${faker.address.city()}, ${faker.address.stateAbbr()}, ${faker.address.zipCode()}.`
+    const productDescription = `This ${productType} was built in ${yearBuild}. It is located at ${faker.address.streetAddress()}, ${faker.address.city()}, ${faker.address.stateAbbr()}, ${faker.address.zipCode()}.`
 
     productsToCreate.push(
       Product.create({
-        name: `${productType} build in ${yearBuild}`,
+        name: `${productType} built in ${yearBuild}`,
         description: productDescription,
         price: (Math.floor(Math.random() * 101) + 1) * 100000,
         imageUrl:

@@ -41,11 +41,11 @@ export const putSingleProduct = (productId, data) => {
   }
 }
 
-export const deleteProduct = (productId, history) => {
+export const deleteProduct = (productId, history, redirectTo) => {
   return async dispatch => {
     try {
       await axios.delete(`/api/products/${productId}`)
-      history.push('/')
+      history.push(redirectTo)
     } catch (err) {
       console.error(err)
     }

@@ -68,6 +68,10 @@ class Order extends React.Component {
     return (
       <div className="order">
         <h1>Your Cart</h1>
+        <h3>Total Amount: ${this.findTotal()}</h3>
+        <Button variant="success" type="button" onClick={this.checkOut}>
+          Check Out
+        </Button>
         {!cart.length ? (
           <h3>Your Cart is empty!</h3>
         ) : (
@@ -81,10 +85,9 @@ class Order extends React.Component {
             />
           ))
         )}
-        <h3>Total Amount: ${this.findTotal()}</h3>
-        <Button variant="success" type="button" onClick={this.checkOut}>
+        {/* <Button variant="success" type="button" onClick={this.checkOut}>
           Check Out
-        </Button>
+        </Button> */}
         {this.state.isCheckedOut && (
           <Redirect
             to={{
@@ -112,7 +115,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(thunkEditProductFromCart(orderId, productId, quantity, userId)),
   checkOutOrder: (orderId, totalPrice, userId) =>
     dispatch(thunkCheckOut(orderId, totalPrice, userId)),
-  getOrder: user => dispatch(thunkAddNewOrder(user))
+  getOrder: user => dispatch(fetchOrder(user))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Order)

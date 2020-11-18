@@ -34,7 +34,7 @@ class AllProducts extends React.Component {
         order,
         product,
         this.state.quantity,
-        this.this.props.user.id
+        this.props.user.id
       )
       .then(() => this.persistentData())
     this.notify()
@@ -63,19 +63,21 @@ class AllProducts extends React.Component {
         )}
 
         <h2>All Products</h2>
-        {this.props.products.map(product => {
-          return (
-            <ProductCard
-              key={product.id}
-              product={product}
-              order={this.props.order}
-              cart={this.props.cart}
-              quantity={this.state.quantity}
-              handleClick={this.handleClick}
-              handleChange={this.handleChange}
-            />
-          )
-        })}
+        <div className="container">
+          {this.props.products.map(product => {
+            return (
+              <ProductCard
+                key={product.id}
+                product={product}
+                order={this.props.order}
+                cart={this.props.cart}
+                quantity={this.state.quantity}
+                handleClick={this.handleClick}
+                // handleChange={this.handleChange}
+              />
+            )
+          })}
+        </div>
       </div>
     )
   }
