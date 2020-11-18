@@ -55,7 +55,7 @@ class UserHome extends React.Component {
     const user = this.props.user
     const orders = this.props.userOrders
     return (
-      <div>
+      <div className="user-home">
         <div>
           <h3>Welcome, {user.name}</h3>
           <img src={user.imageUrl} />
