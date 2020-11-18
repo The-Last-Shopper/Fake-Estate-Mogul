@@ -97,7 +97,7 @@ const mapDispatchToProps = dispatch => {
     fetchProducts: () => dispatch(fetchAllProducts()),
     addProductToOrder: (order, product, quantity, userId) =>
       dispatch(thunkAddProductToCart(order, product, quantity, userId)),
-    loadOrder: user => dispatch(thunkAddNewOrder(user)),
+    loadOrder: user => dispatch(fetchOrder(user)),
     getCart: orderId => dispatch(fetchCart(orderId))
   }
 }

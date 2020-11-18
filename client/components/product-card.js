@@ -7,32 +7,32 @@ const ProductCard = props => {
     product => product.productId === props.product.id
   )
   return (
-    <Card border="primary" style={{width: '18rem'}}>
-        <div className="product-card">
-          <img src={props.product.imageUrl} className="card-img-top" />
-          <Link to={`/products/${props.product.id}`}>
-            <h4 className="card-title">Name: {props.product.name}</h4>
-          </Link>
-           <form>
-             <label htmlFor="quantity">Quantity: </label>
-             <input
-               name="quantity"
-               type="number"
-               min="1"
-               step="1"
-               value={props.quantity}
-               onChange={props.handleChange}
-             />
-             <p className="card-title">Price: {props.product.price}</p>
-             <button
-                className="btn btn-primary" disabled={inCart}
-                  onClick={() => props.handleClick(props.order, props.product)}
-                  type="button"
-             >
-               Add To Cart
-             </button>
-          </form>
-        </div>
+    <div className="product-card">
+      <Card border="primary" style={{width: '18rem'}}>
+        <img src={props.product.imageUrl} className="card-img-top" />
+        <Link to={`/products/${props.product.id}`}>
+          <h4 className="card-title">Name: {props.product.name}</h4>
+        </Link>
+        <form>
+          <label htmlFor="quantity">Quantity: </label>
+          <input
+            name="quantity"
+            type="number"
+            min="1"
+            step="1"
+            value={props.quantity}
+            onChange={props.handleChange}
+          />
+          <p className="card-title">Price: {props.product.price}</p>
+          <button
+            className="btn btn-primary"
+            disabled={inCart}
+            onClick={() => props.handleClick(props.order, props.product)}
+            type="button"
+          >
+            Add To Cart
+          </button>
+        </form>
       </Card>
     </div>
   )
