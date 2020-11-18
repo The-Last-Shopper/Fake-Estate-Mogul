@@ -46,7 +46,13 @@ class ProductCard extends React.Component {
               <button
                 className="btn btn-primary"
                 disabled={inCart}
-                onClick={() => props.handleClick(props.order, props.product)}
+                onClick={() =>
+                  props.handleClick(
+                    props.order,
+                    props.product,
+                    this.state.quantity
+                  )
+                }
                 type="button"
               >
                 Add To Cart
