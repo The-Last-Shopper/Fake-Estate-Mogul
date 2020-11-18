@@ -57,9 +57,12 @@ class UserHome extends React.Component {
     return (
       <div className="user-home">
         <div>
-          <h3>Welcome, {user.name}</h3>
+          <h3 className="greeting">Welcome, {user.name}</h3>
+          <div>
+            <h4 className="user-info">User Info</h4>
+          </div>
           <img src={user.imageUrl} />
-          <h4 className="user-info">User Info</h4>
+
           <p>Name: {user.name}</p>
           <p>Email: {user.email}</p>
           <p>Address: {user.address}</p>
@@ -95,7 +98,7 @@ class UserHome extends React.Component {
         )}
         <div>
           <h4 className="center-color">Order History</h4>
-          <Table>
+          <Table striped bordered hover variant="dark">
             <thead>
               <tr>
                 <th>Order No.</th>

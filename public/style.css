@@ -1,12 +1,6 @@
-body {
-  font-family: sans-serif;
-  background: url('https://cdn.hipwallpaper.com/i/27/49/GfZ1ap.jpg') no-repeat
-    center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
+/* body {
+
+} */
 
 a {
   text-decoration: none;
@@ -54,11 +48,12 @@ form div {
 .center-color {
   text-align: center;
   text-decoration: underline;
+  font-weight: bold;
 }
 
 .all-products,
 .order {
-  background: url('Websit\ Image.jpg') no-repeat center center fixed;
+  background: url('skyline\ doha.webp') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -70,23 +65,54 @@ form div {
   font-weight: bold;
 }
 
-.user-home {
+/* .user-home {
   height: 50rem;
-  background: url('https://i.pinimg.com/originals/bc/71/57/bc7157954f158dec66c8ee98c1313f02.jpg')
-    no-repeat center center fixed;
+  background: url('./Usr\ Profile.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
+} */
 
 .order-header,
 .order,
-.user-home,
 .single-product,
 .all-products,
-.admin-dashboard,
-.user-info {
+.admin-dashboard {
   margin: auto;
   text-align: center;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+}
+
+.center {
+  text-align: center;
+}
+
+.border {
+  text-align: center;
+}
+
+.greeting {
+  text-align: center;
+  color: red;
+}
+
+.change-border {
+  border: 3px solid blue;
+  text-align: center;
+  color: red;
+}
+
+.loginSignUp {
+  font-family: sans-serif;
+  background: url('./Login\ page.webp') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
 }

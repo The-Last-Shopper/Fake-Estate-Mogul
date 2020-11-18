@@ -11,59 +11,74 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div>
-      <form onSubmit={e => handleSubmit(e, name)} name={name}>
-        <div className="border">
-          <FormGroup controlId="formBasicEmail">
-            <label htmlFor="email">
-              <small>Email</small>
-            </label>
-            <input name="email" type="email" />
-          </FormGroup>
-          {name === 'signup' && (
-            <React.Fragment>
-              <div>
-                <label htmlFor="name">
-                  <small>Name</small>
-                </label>
-                <input name="name" type="text" />
-              </div>
-              <br />
-              <div>
-                <label htmlFor="address">
-                  <small>Address</small>
-                </label>
-                <input name="address" type="text" />
-              </div>
-              <div>
-                <label htmlFor="imageUrl">
-                  <small>Image</small>
-                </label>
-                <input name="imageUrl" type="text" />
-              </div>
-            </React.Fragment>
-          )}
-          <br />
-          <FormGroup controlId="formBasicPassword">
-            <label htmlFor="password">
-              <small>Password</small>
-            </label>
-            <input name="password" type="password" />
-            <FormText className="text-muted">
-              We'll never share your password with anyone else.
-            </FormText>
-          </FormGroup>
-        </div>
+    <div className="loginSignUp">
+      <div className="center-container">
+        <form onSubmit={e => handleSubmit(e, name)} name={name}>
+          <div className="change-border">
+            {name === 'signup' ? (
+              <h4 className="center">Sign Up Here</h4>
+            ) : (
+              <h4 className="center">Login</h4>
+            )}
 
-        <br />
-        <div>
-          <Button variant="primary" type="submit">
-            {displayName}
-          </Button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
+            <FormGroup className="bordercolor" controlId="formBasicEmail">
+              <label className="center" htmlFor="email">
+                <p>Email</p>
+              </label>
+              <input className="center" name="email" type="email" />
+            </FormGroup>
+            {name === 'signup' && (
+              <React.Fragment>
+                <div>
+                  <label htmlFor="name">
+                    <p>Name</p>
+                  </label>
+                  <input name="name" type="text" />
+                </div>
+                <br />
+                <div>
+                  <label htmlFor="address">
+                    <p>Address</p>
+                  </label>
+                  <input name="address" type="text" />
+                </div>
+                <div>
+                  <label htmlFor="imageUrl">
+                    <p>Image</p>
+                  </label>
+                  <input name="imageUrl" type="text" />
+                </div>
+              </React.Fragment>
+            )}
+            <br />
+            <FormGroup controlId="formBasicPassword">
+              <label htmlFor="password">
+                <p>Password</p>
+              </label>
+              <input className="center" name="password" type="password" />
+              <FormText className="text-muted">
+                We'll never share your password with anyone else.
+              </FormText>
+            </FormGroup>
+          </div>
+
+          <br />
+          <div className="center-container">
+            <Button variant="primary" type="submit">
+              {displayName}
+            </Button>
+          </div>
+          {error &&
+            error.response && (
+              <div className="center-container">
+                <div> {error.response.data} </div>{' '}
+              </div>
+            )}
+        </form>
+      </div>
+      <div className="center-container">
+        <a href="/auth/google">{displayName} with Google</a>
+      </div>
     </div>
   )
 }

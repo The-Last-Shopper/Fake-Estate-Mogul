@@ -13,7 +13,7 @@ class UsersInfo extends React.Component {
     return (
       <div className="user-info">
         <h1>Users Information</h1>
-        <Table>
+        <Table striped bordered hover variant="dark">
           <thead>
             <tr>
               <th>No.</th>

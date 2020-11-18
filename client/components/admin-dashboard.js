@@ -52,7 +52,7 @@ class AdminDashboard extends React.Component {
           {this.state.showProducts && (
             <React.Fragment>
               <h3>Product Information</h3>
-              <Table>
+              <Table striped bordered hover variant="dark">
                 <thead>
                   <tr>
                     <td>Product ID</td>
@@ -99,7 +99,7 @@ class AdminDashboard extends React.Component {
           {this.state.showUsers && (
             <React.Fragment>
               <h3>User Information</h3>
-              <Table>
+              <Table striped bordered hover variant="dark">
                 <thead>
                   <tr>
                     <th>User ID</th>
