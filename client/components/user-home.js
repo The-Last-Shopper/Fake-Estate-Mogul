@@ -15,6 +15,7 @@ class UserHome extends React.Component {
       name: '',
       email: '',
       address: '',
+      userId: {},
       toggling: false
     }
     this.toggleInput = this.toggleInput.bind(this)
@@ -27,7 +28,8 @@ class UserHome extends React.Component {
     this.setState({
       name: this.props.user.name,
       email: this.props.user.email,
-      address: this.props.user.address
+      address: this.props.user.address,
+      userId: this.props.user.id
     })
   }
 
@@ -52,7 +54,6 @@ class UserHome extends React.Component {
   render() {
     const user = this.props.user
     const orders = this.props.userOrders
-    console.log(user)
     return (
       <div>
         <div>
@@ -97,8 +98,8 @@ class UserHome extends React.Component {
           <Table>
             <thead>
               <tr>
-                <th>Order #</th>
-                <th>Confirmation #</th>
+                <th>Order No.</th>
+                <th>Confirmation No.</th>
                 <th>Total Price</th>
               </tr>
             </thead>
@@ -106,9 +107,9 @@ class UserHome extends React.Component {
               {orders.length
                 ? orders.map(order => (
                     <tr key={order.id}>
-                      <td>{order.id}</td>
-                      <td>{order.confirmationNum}</td>
-                      <td>{order.totalPrice}</td>
+                      <td>#{order.id}</td>
+                      <td>#{order.confirmationNum}</td>
+                      <td>${order.totalPrice}</td>
                     </tr>
                   ))
                 : null}
