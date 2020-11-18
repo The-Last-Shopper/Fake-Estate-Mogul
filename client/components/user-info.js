@@ -10,7 +10,6 @@ class UsersInfo extends React.Component {
 
   render() {
     const users = this.props.users || []
-    console.log(users)
     return (
       <div>
         <h1>Users Information</h1>

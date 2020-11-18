@@ -5,7 +5,7 @@ class OrderCard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      quantity: 0
+      quantity: 1
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -20,7 +20,12 @@ class OrderCard extends React.Component {
     const product = this.props.product
 
     this.props
-      .editProduct(product.orderId, product.productId, this.state.quantity)
+      .editProduct(
+        product.orderId,
+        product.productId,
+        this.state.quantity,
+        this.props.user.id
+      )
       .then(() => this.props.persistentData())
   }
 
@@ -38,7 +43,7 @@ class OrderCard extends React.Component {
           <input
             name="quantity"
             type="number"
-            min="0"
+            min="1"
             step="1"
             value={this.state.quantity}
             onChange={this.handleChange}
@@ -54,7 +59,8 @@ class OrderCard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  order: state.order
+  order: state.order,
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({})
