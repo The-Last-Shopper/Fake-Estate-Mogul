@@ -62,7 +62,8 @@ async function seed() {
   const productsToCreate = [
     Product.create({
       name: 'Bungalow',
-      description: 'It is a house',
+      description:
+        'Have you ever been to a tropical beach and seen a rustic, beautiful cabin and thought to you yourself, I WANT TO LIVE THERE? Now you can by purchasing a homey and comfortable bungalow! Beach not included.',
       price: 200000,
       type: 'Bungalow',
       quantity: 5,
@@ -71,7 +72,8 @@ async function seed() {
     }),
     Product.create({
       name: 'Apartment',
-      description: 'It is an apartment',
+      description:
+        'For the well-to-do city dweller, this apartment contains all you need to make it in the big city with minimal living space! Get it fast now, while prices are cheap!',
       price: 400000,
       type: 'Apartment',
       quantity: 6,
@@ -80,7 +82,8 @@ async function seed() {
     }),
     Product.create({
       name: 'Condo',
-      description: 'It is a condo',
+      description:
+        'For those wanting a step up from an apartment, a condominium unit has all the space of an apartment, with every extra amenity you could ask for! *Amenities not included in condo purchase price.',
       price: 800000,
       type: 'Condo',
       quantity: 7,
@@ -89,7 +92,8 @@ async function seed() {
     }),
     Product.create({
       name: 'Penthouse',
-      description: 'It is a penthouse',
+      description:
+        'For those who want the best of both worlds, modern city living with all the luxuries of high end living, a penthouse is exactly what you need. Gaze down upon the city from your lofty perch in the sky!',
       price: 1000000,
       type: 'Penthouse',
       quantity: 3,
@@ -98,7 +102,8 @@ async function seed() {
     }),
     Product.create({
       name: 'Mansion',
-      description: 'It is a mansion',
+      description:
+        "You've made it to the top, nothing else will satisfy you but a MASSIVE mansion to call your own. These mansions vary in difference, but rest assured you will have your very own chateau, palace, villa, whatever you want to call it. *Servants and staff not included, please provide your own!",
       price: 3000000,
       type: 'Mansion',
       quantity: 2,

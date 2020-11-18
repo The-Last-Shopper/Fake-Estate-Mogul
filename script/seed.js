@@ -56,35 +56,40 @@ async function seed() {
   const products = await Promise.all([
     Product.create({
       name: 'Bungalow',
-      description: 'It is a house',
+      description:
+        'Have you ever been to a tropical beach and seen a rustic, beautiful cabin and thought to you yourself, I WANT TO LIVE THERE? Now you can by purchasing a homey and comfortable bungalow! Beach not included',
       price: 200000,
       imageUrl:
         'https://www.houseplans.net/uploads/plans/2824/elevations/40597-1200.jpg?v=0'
     }),
     Product.create({
       name: 'Apartment',
-      description: 'It is an apartment',
+      description:
+        'For the well-to-do city dweller, this apartment contains all you need to make it in the big city with minimal living space! Get it fast now, while prices are cheap!',
       price: 400000,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQhT2U27qTQOIgLE9p8iiKKDHev2RL1OL0vjw&usqp=CAU'
     }),
     Product.create({
       name: 'Condo',
-      description: 'It is a condo',
+      description:
+        'For those wanting a step up from an apartment, a condominium unit has all the space of an apartment, with every extra amenity you could ask for! *Amenities not included in condo purchase price.',
       price: 800000,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSooE3S9WPfAjquh1_pZpazzxf4wUT9-Jl0Sg&usqp=CAU'
     }),
     Product.create({
       name: 'Penthouse',
-      description: 'It is a penthouse',
+      description:
+        'For those who want the best of both worlds, modern city living with all the luxuries of high end living, a penthouse is exactly what you need. Gaze down upon the city from your lofty perch in the sky!',
       price: 1000000,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSZX_9AtMR8M1z91bl-4OZBC9D2q1LM7NmyGQ&usqp=CAU'
     }),
     Product.create({
       name: 'Mansion',
-      description: 'It is a mansion',
+      description:
+        "You've made it to the top, nothing else will satisfy you but a MASSIVE mansion to call your own. These mansions vary in difference, but rest assured you will have your very own chateau, palace, villa, whatever you want to call it. *Servants and staff not included, please provide your own!",
       price: 3000000,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS_BXA02XUyNPDLhQFF5O36FySUHjkg32lsBw&usqp=CAU'
