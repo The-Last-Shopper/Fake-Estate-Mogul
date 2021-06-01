@@ -1,30 +1,27 @@
 language: node_js
 node_js:
-  - 12 # uses version 12
+- 12
 services:
-  - postgresql # starts up postgres
+- postgresql
 addons:
-  postgresql: '10' # recent postgres version on Travis
-dist: xenial # uses xenial environment
+  postgresql: '10'
+dist: xenial
 notifications:
   email:
-    on_success: change # default: change (only when going from broken to fixed)
-    on_failure: always # default: always (which is annoying, as it should be)
+    on_success: change
+    on_failure: always
 install:
-  - npm ci # faster, goes only from package-lock
+- npm ci
 before_script:
-  - psql -c 'create database "fake-estate-mogul-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+- psql -c 'create database "fake-estate-mogul-test";' -U postgres
 script:
-  - npm test # test the code
-  - npm run build-client # make the bundle
-before_deploy: # omit node_modules, since we set skip_cleanup below
-  - rm -rf node_modules
-deploy: # see README for details on these keys
-  # prevents travis from deleting the build
+- npm test
+- npm run build-client
+before_deploy:
+- rm -rf node_modules
+deploy:
   skip_cleanup: true
   provider: heroku
-  # app should be your heroku app name; see README
   app: fake-estate-mogul
-  # the secure key indicates an encrypted value; see README
   api_key:
-    secure: 0OvlvJtZwZ9Et2YPVrnc5aRv7FC4BOoa/B8899qznXu/fPPQ5NYcl4ej7E2GA0f4/qOzFJaN7LkJRLmiG6azFOTxgGtYFxg0ANw6yx1bW+PRN+pwAjsLSuEkhmhtYMHkTBl+E8UFijc5EOly553DoR0Om/5cZnJfE+1i/VTZmjL25r2PwhuDAq1XbM/ISVQQ0PG9+bEF8N75aA5kg6xoR6rPARflQaIbxr2xOiHU41H9e89QlHeOQs/AFtaFDLd9DSRBvC/GrL0b89uGdxHphm4V00l3qshdYhgyXHZ20B/m/mJ+nt7tkZLFDTIk9Mrph7eP585PGJkw+va0b8Ti0rGATQFsYczWMFYGUzUvLdHwrQIkyHADuw3EV9JAcr+b3xnwAporQpsGafF4xXjJLJfMwRG0jZNSse7PAbGXBD3bRPbRteUp1iH86zL2Eh7Cw2qccdHIYteFe/qVg+cqqNpoeRRTooCtPT52HCAx9EQrAok2RPdzztvq8LIp4/pNYTVa4DhVQ5CLeQOHBe7PSQcBlHZEn90UogorxiRD0pafpyXEZM1kcYfUI/eOAIt5rC8fZapbaosL0dl3QgzJiw7WlIjlt0rddC2d1wBUuEd1Rhz0Fk6AUP8GqESfHnDgg3jZaD2Lqnj3rn2NKsU9j2K0RC0i+/4gQydZsM3kgBI=
+    secure: JReViFRuzY9B2BnSn4mV9sPHFvsUt966eBh45jnBotjaHA6l8qH+gPq9QQemJpKKvkp5B8paCZ1PLGAJaqQxh6nkNEXKPoprpNyeOSEi6s4TkHovRxTFTdicTlWvMxuJ7hwZhSODxlxQU1tV6uSSabCQ+yBADdWz9E18ZFZkjxrEq/gFo3mrPtWrkXRQOEOcd+CBIJlloXG4ghEwxe7YwWF0By1fTJBQWgiFGhzSQFDD+Mfw/ef5UVb1J/9aIz2GNrriPGCToT82iNX8tyGBNg/Bsd6bGalkj3buQMxrUsUbfh5u13wpTcQNWnJWInukiQpdttHUZtd+42Nu93gtLl1HdoNwpkRKW1qM8HZZuG4tWcL5pdaUP+tzpOVxu7+UvG0ftYjNPnC1u/Zsa9JbDLAzNi2wZjLZg4WTp/5x+nOoPVm9WSQJePx8iKhTsmsbUZxdDSKjUiCDleJ5mVaC5KiOOejVoAhlDt8O2raxg6GOVKuHIa7gl/H8M6e66Gq1A/DH+71rUemdeG3oh6v7JUBc9L3XSB1sFyOetnqFYvRPCMA0gIsgyJBFBaWWzjCWEAxWDS0Ey8WbCxIiJM+h9S3XLSN8d6l699rtuaxHLmSDGZSi6cUd5j6sHTFL0Q8tDKBsqOvihkHxyXAECHMUPdG08/s+DFDVUmnLZOv9e/Y=
